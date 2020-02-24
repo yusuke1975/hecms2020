@@ -1,0 +1,3 @@
+@section('breadcrumbs')
+    home >
+@endsection
