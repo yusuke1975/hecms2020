@@ -10,30 +10,56 @@
 --}}
     <script>
         (function($) {
-            $('#add-item').click(function(){
-                var cntRow = $('#const-database .row').length - 1 ;
-                console.log(event.target);
+            $('.add-item').click(function(){
+                var targetName = $(this)[0]['name'];
+                console.log(targetName);
 
+//                var obj = document.getElementsByName(targetName)[0];
+//                console.log(obj['id']);
+                var targetId = '#const-'+targetName;
+                var cntRow = $(targetId+' .row').length + 1;
+//                console.log($(targetId+' .row').length -1);
+//                var $ele = $('<div>', {class: 'row'}).append('hello!');
+                var $ele = '                        <div class="row">\n' +
+                    '                            <span class="col-md-1 form-group">\n' +
+                    '<span class="badge badge-danger">New</span>\n' +
+                    '                            </span>\n' +
+                    '                            <div class="col-md-2 form-group text-right">\n' +
+//                    '                                const-'+cntRow+'\n' +
+                    '                                <input type="text" placeholder="key name" class="form-control">\n' +
+                    '                            </div>\n' +
+                    '                            <div class="col-md-8 form-group">\n' +
+                    '                                <input type="text" placeholder="value" class="form-control">\n' +
+                    '                            </div>\n' +
+                    '                            <span class="col-md-1 form-group">\n' +
+                    '                                <a href="#addEmployeeModal" class="" data-toggle="modal">\n' +
+                    '                                    <i class="btn material-icons delete-icon-circle p-0">remove_circle</i>\n' +
+                    '                                </a>\n' +
+                    '                            </span>\n' +
+                    '                        </div>\n';
+                    $(targetId).append($ele);
 
-                $('#const-database').append('<input type="text">');
-{{--
-                    <div class="row">
-                        <div class="col-md-2 form-group text-right">
-                            const-1
-                        </div>
-                        <div class="col-md-9 form-group">
-                            <input type="text" placeholder="value" class="form-control">
-                        </div>
-                        <span class="col-md-1 form-group">
-                            <a href="#addEmployeeModal" class="" data-toggle="modal">
-                                <i class="btn material-icons delete-icon-circle p-0">remove_circle</i>
-                            </a>
-                        </span>
-                    </div>
-
---}}
-            });
+                });
         })(jQuery);
+
+        {{--
+var cntRow = $('#const-database .row').length - 1 ;
+                        $('#const-database').append('<input type="text">');
+                            <div class="row">
+                                <div class="col-md-2 form-group text-right">
+                                    const-1
+                                </div>
+                                <div class="col-md-9 form-group">
+                                    <input type="text" placeholder="value" class="form-control">
+                                </div>
+                                <span class="col-md-1 form-group">
+                                    <a href="#addEmployeeModal" class="" data-toggle="modal">
+                                        <i class="btn material-icons delete-icon-circle p-0">remove_circle</i>
+                                    </a>
+                                </span>
+                            </div>
+
+        --}}
     </script>
 
 @endsection
@@ -52,39 +78,47 @@
             </div><!-- /.card-header -->
             <div id="collapse1" class="collapse show" role="tabpanel"
                  aria-labelledby="heading1" data-parent="#accordion">
-                <div class="card-body" id="const-database">
-                    <div class="row">
-                        <div class="col-md-2 form-group text-right">
-                            const-1
+                <div class="card-body">
+                    <div id="const-database">
+                        <div class="row">
+                            <span class="col-md-1 form-group">
+                            </span>
+                            <div class="col-md-2 form-group text-right">
+                                const-1
+                            </div>
+                            <div class="col-md-8 form-group">
+                                <input type="text" placeholder="value" class="form-control">
+                            </div>
+                            <span class="col-md-1 form-group">
+                                <a href="#addEmployeeModal" class="" data-toggle="modal">
+                                    <i class="btn material-icons delete-icon-circle p-0">remove_circle</i>
+                                </a>
+                            </span>
                         </div>
-                        <div class="col-md-9 form-group">
-                            <input type="text" placeholder="value" class="form-control">
+                        <div class="row">
+                            <span class="col-md-1 form-group">
+                            </span>
+                            <div class="col-md-2 form-group text-right">
+                                const-2
+                            </div>
+                            <div class="col-md-8 form-group">
+                                <input type="text" placeholder="value" class="form-control">
+                            </div>
+                            <span class="col-md-1 form-group">
+                                <a href="#addEmployeeModal" class="" data-toggle="modal">
+                                    <i class="btn material-icons delete-icon-circle p-0">remove_circle</i>
+                                </a>
+                            </span>
                         </div>
-                        <span class="col-md-1 form-group">
-                            <a href="#addEmployeeModal" class="" data-toggle="modal">
-                                <i class="btn material-icons delete-icon-circle p-0">remove_circle</i>
-                            </a>
-                        </span>
                     </div>
-                    <div class="row">
-                        <div class="col-md-2 form-group text-right">
-                            const-2
-                        </div>
-                        <div class="col-md-9 form-group">
-                            <input type="text" placeholder="value" class="form-control">
-                        </div>
-                        <span class="col-md-1 form-group">
-                            <a href="#addEmployeeModal" class="" data-toggle="modal">
-                                <i class="btn material-icons delete-icon-circle p-0">remove_circle</i>
-                            </a>
-                        </span>
-                    </div>
-                    <div class="row">
+                    <div class="row" rowtype="newItem">
                         <div class="col-md-2 form-group text-right">
 
                         </div>
                         <span class="col-md-10 form-group">
-                                <button id="add-item" name="database" class="btn btn-info float-left add-icon-circle" data-toggle="modal">
+                                <button id="add-items" name="database"
+                                        class="btn btn-info float-left add-icon-circle add-item"
+                                        data-toggle="modal">
                                     <i class="material-icons add-icon-circle"></i>
                                     <span class="">New</span>
                                 </button>
