@@ -4,6 +4,40 @@
     <link rel="stylesheet" href="{{ asset('assets/css/page_settings_const.css') }}">
 @endsection
 
+@section('page-foot')
+{{--
+    <script src="{{ asset('assets/js/page_settings_const.js') }}"></script>
+--}}
+    <script>
+        (function($) {
+            $('#add-item').click(function(){
+                var cntRow = $('#const-database .row').length - 1 ;
+                console.log(event.target);
+
+
+                $('#const-database').append('<input type="text">');
+{{--
+                    <div class="row">
+                        <div class="col-md-2 form-group text-right">
+                            const-1
+                        </div>
+                        <div class="col-md-9 form-group">
+                            <input type="text" placeholder="value" class="form-control">
+                        </div>
+                        <span class="col-md-1 form-group">
+                            <a href="#addEmployeeModal" class="" data-toggle="modal">
+                                <i class="btn material-icons delete-icon-circle p-0">remove_circle</i>
+                            </a>
+                        </span>
+                    </div>
+
+--}}
+            });
+        })(jQuery);
+    </script>
+
+@endsection
+
 @section('content')
 <div id="page-settings-const">
     <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
@@ -18,8 +52,44 @@
             </div><!-- /.card-header -->
             <div id="collapse1" class="collapse show" role="tabpanel"
                  aria-labelledby="heading1" data-parent="#accordion">
-                <div class="card-body">
-                    app
+                <div class="card-body" id="const-database">
+                    <div class="row">
+                        <div class="col-md-2 form-group text-right">
+                            const-1
+                        </div>
+                        <div class="col-md-9 form-group">
+                            <input type="text" placeholder="value" class="form-control">
+                        </div>
+                        <span class="col-md-1 form-group">
+                            <a href="#addEmployeeModal" class="" data-toggle="modal">
+                                <i class="btn material-icons delete-icon-circle p-0">remove_circle</i>
+                            </a>
+                        </span>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 form-group text-right">
+                            const-2
+                        </div>
+                        <div class="col-md-9 form-group">
+                            <input type="text" placeholder="value" class="form-control">
+                        </div>
+                        <span class="col-md-1 form-group">
+                            <a href="#addEmployeeModal" class="" data-toggle="modal">
+                                <i class="btn material-icons delete-icon-circle p-0">remove_circle</i>
+                            </a>
+                        </span>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 form-group text-right">
+
+                        </div>
+                        <span class="col-md-10 form-group">
+                                <button id="add-item" name="database" class="btn btn-info float-left add-icon-circle" data-toggle="modal">
+                                    <i class="material-icons add-icon-circle"></i>
+                                    <span class="">New</span>
+                                </button>
+                        </span>
+                    </div>
                 </div><!-- /.card-body -->
             </div><!-- /.collapse -->
         </div><!-- /.card -->

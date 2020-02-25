@@ -58,4 +58,6 @@
         })(jQuery);
     </script>
 
+    @yield('page-foot')
+
 @endsection

@@ -16,7 +16,7 @@
 
     </div>
 
-    <div class="content mt-3">
+    <div class="content mt-1 pr-2 pl-2">
         @yield('content')
 
         {{-- message

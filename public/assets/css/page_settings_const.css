@@ -1,3 +1,83 @@
+#page-settings-const{
+    background-color: #ffffff;
+    padding: 10px;
+}
+/*
+    background-color: var(--sitecolor-lightgray);
+    color: #ffffff;
+    background-color: #707070;
+    background-color: #f5f5f5;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.3);
+ */
 #page-settings-const .card{
-    margin-bottom: 0;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.3);
+    border: 0;
+    border-radius: 20px;
+}
+
+#page-settings-const .card .card-header{
+    padding: 0;
+    border-radius: 20px 20px 0 0;
+    background-color: #f5f5f5;
+}
+/*
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+    display: inline-block;
+    height: 30px;
+    position: relative;
+    width: 30px;
+    text-align: center;
+ */
+
+#page-settings-const .card-body .col-md-1 .delete-icon-circle {
+    font-size: 2em;
+}
+
+/*
+    display: inline-flex;
+    margin-bottom: 5px;
+    vertical-align: bottom;
+
+ */
+#page-settings-const .card-body .btn .material-icons{
+    display: inline-flex;
+    margin-bottom: 2px;
+    vertical-align: bottom;
+}
+
+/* isplay: inline-flexに変更し、vertical-align: middle */
+#page-settings-const .card-body .btn{
+    font-size: 18px;
+    border-radius: 10px;
+}
+
+#page-settings-const .card-body .btn span{
+}
+
+#page-settings-const .row .card-body .col-md-1　.btn .material-icons{
+}
+/*
+    line-height: 1;
+    display: inline-block;
+    text-transform: none;
+    vertical-align: middle;
+
+ */
+#page-settings-const .card-body .col-md-1 .add-icon-circle {
+}
+
+/*
+    font-size: 2em;
+    border-radius: 50%;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    position: relative;
+    text-align: center;
+    padding: 0;
+    border-radius: 50%;
+ */
+#page-settings-const .card .card-header{
 }
