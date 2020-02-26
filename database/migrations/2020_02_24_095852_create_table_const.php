@@ -17,6 +17,7 @@ class CreateTableConst extends Migration
             $table->bigIncrements('id');
             $table->string('const_name')->unique()->comment("設定名");
             $table->string('const_value')->unique()->comment("const値");
+            $table->string('category_code')->unique()->comment("constのカテゴリコード");
             $table->string('const_type_code')->unique()->comment("const値のタイプコード");
             $table->timestamps();
         });

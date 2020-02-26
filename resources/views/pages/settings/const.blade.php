@@ -10,36 +10,44 @@
 --}}
     <script>
         (function($) {
-            $('.add-item').click(function(){
+
+            /* 新規項目の追加 */
+            $(document).on("click", ".add-item", function () {
                 var targetName = $(this)[0]['name'];
                 console.log(targetName);
-
 //                var obj = document.getElementsByName(targetName)[0];
 //                console.log(obj['id']);
                 var targetId = '#const-'+targetName;
                 var cntRow = $(targetId+' .row').length + 1;
-//                console.log($(targetId+' .row').length -1);
-//                var $ele = $('<div>', {class: 'row'}).append('hello!');
-                var $ele = '                        <div class="row">\n' +
+                var $strRow = '                        <div id="'+targetName+'-new-'+cntRow+'" class="row">\n' +
                     '                            <span class="col-md-1 form-group">\n' +
-                    '<span class="badge badge-danger">New</span>\n' +
+                    '                            <span class="badge badge-danger">New</span>\n' +
                     '                            </span>\n' +
                     '                            <div class="col-md-2 form-group text-right">\n' +
-//                    '                                const-'+cntRow+'\n' +
                     '                                <input type="text" placeholder="key name" class="form-control">\n' +
                     '                            </div>\n' +
                     '                            <div class="col-md-8 form-group">\n' +
                     '                                <input type="text" placeholder="value" class="form-control">\n' +
                     '                            </div>\n' +
                     '                            <span class="col-md-1 form-group">\n' +
-                    '                                <a href="#addEmployeeModal" class="" data-toggle="modal">\n' +
-                    '                                    <i class="btn material-icons delete-icon-circle p-0">remove_circle</i>\n' +
+                    '                                <a href="" class="" data-toggle="modal">\n' +
+                    '                                    <i id="'+targetName+'-new-'+cntRow+'-rm-btn" class="btn material-icons delete-icon-circle p-0 delete-item">remove_circle</i>\n' +
                     '                                </a>\n' +
                     '                            </span>\n' +
                     '                        </div>\n';
-                    $(targetId).append($ele);
+                    $(targetId).append($strRow);
 
-                });
+            });
+
+            /* 項目の削除 */
+            $(document).on("click", ".delete-item", function () {
+                var targetId = "#"+$(this)[0]['id'].replace("-rm-btn", "");
+
+                console.log("remove target id:["+targetId+"]");
+                console.log($(targetId));
+                $(targetId).remove();
+            });
+
         })(jQuery);
 
         {{--
@@ -65,6 +73,7 @@ var cntRow = $('#const-database .row').length - 1 ;
 @endsection
 
 @section('content')
+    <pre>{{print_r($ary_env)}}</pre>
 <div id="page-settings-const">
     <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
         <div class="card">
@@ -80,7 +89,7 @@ var cntRow = $('#const-database .row').length - 1 ;
                  aria-labelledby="heading1" data-parent="#accordion">
                 <div class="card-body">
                     <div id="const-database">
-                        <div class="row">
+                        <div id="database-const-1" class="row">
                             <span class="col-md-1 form-group">
                             </span>
                             <div class="col-md-2 form-group text-right">
@@ -90,8 +99,8 @@ var cntRow = $('#const-database .row').length - 1 ;
                                 <input type="text" placeholder="value" class="form-control">
                             </div>
                             <span class="col-md-1 form-group">
-                                <a href="#addEmployeeModal" class="" data-toggle="modal">
-                                    <i class="btn material-icons delete-icon-circle p-0">remove_circle</i>
+                                <a href="" class="" data-toggle="modal">
+                                    <i id="database-const-1-rm-btn" class="btn material-icons delete-icon-circle p-0 delete-item">remove_circle</i>
                                 </a>
                             </span>
                         </div>
@@ -105,8 +114,8 @@ var cntRow = $('#const-database .row').length - 1 ;
                                 <input type="text" placeholder="value" class="form-control">
                             </div>
                             <span class="col-md-1 form-group">
-                                <a href="#addEmployeeModal" class="" data-toggle="modal">
-                                    <i class="btn material-icons delete-icon-circle p-0">remove_circle</i>
+                                <a href="" class="" data-toggle="modal">
+                                    <i class="btn material-icons delete-icon-circle p-0 delete-item">remove_circle</i>
                                 </a>
                             </span>
                         </div>
