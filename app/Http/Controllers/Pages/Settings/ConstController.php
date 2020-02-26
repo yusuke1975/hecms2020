@@ -28,24 +28,17 @@ class ConstController extends Controller
     {
         $page_name = "Const";
         $breadcrumbs = "Settings > Const";
+
         /* get .env file */
         $env_text = file_get_contents(__DIR__ . '/../../../../../.env');
 //        $env_text = $env_text[0];
         $ary_env_tmp = explode("\n",$env_text);
-/*
-        print_r($ary_env);
-        exit;
-        if(is_array($ary_env)) {
-            echo "TRUE";
-        }else{
-            echo "FALSE";
-        }
-        exit;
-*/
-        $ary_env = array();
+
+        $ary_env['env'] = array();
         foreach ($ary_env_tmp as $val){
             if(strlen($val) > 0 && substr($val, 0, 1) !== "#"){
-                $ary_env[] = $val;
+                $strcnt = strpos( $val, "=");
+                $ary_env['env'][substr($val, 0, $strcnt)] = substr($val, $strcnt + 1);
             }
         }
         return view('pages.settings.const', compact('page_name', 'breadcrumbs', 'ary_env'));

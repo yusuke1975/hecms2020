@@ -18,24 +18,36 @@
 //                var obj = document.getElementsByName(targetName)[0];
 //                console.log(obj['id']);
                 var targetId = '#const-'+targetName;
-                var cntRow = $(targetId+' .row').length + 1;
-                var $strRow = '                        <div id="'+targetName+'-new-'+cntRow+'" class="row">\n' +
+                var hiddenTargetId = '#add-item-'+targetName;
+                var cntRow = $(targetId+' li').length + 1;
+                var $strRow ='                        <li id="'+targetName+'-new-'+cntRow+'" class="list-group-item  add-item">\n' +
+                    '                        <div class="row">\n' +
                     '                            <span class="col-md-1 form-group">\n' +
                     '                            <span class="badge badge-danger">New</span>\n' +
                     '                            </span>\n' +
-                    '                            <div class="col-md-2 form-group text-right">\n' +
+                    '                            <div class="col-md-3 form-group text-right">\n' +
                     '                                <input type="text" placeholder="key name" class="form-control">\n' +
                     '                            </div>\n' +
-                    '                            <div class="col-md-8 form-group">\n' +
+                    '                            <div class="col-md-6 form-group">\n' +
                     '                                <input type="text" placeholder="value" class="form-control">\n' +
                     '                            </div>\n' +
-                    '                            <span class="col-md-1 form-group">\n' +
+                    '                            <span class="col-md-2 form-group">\n' +
                     '                                <a href="" class="" data-toggle="modal">\n' +
-                    '                                    <i id="'+targetName+'-new-'+cntRow+'-rm-btn" class="btn material-icons delete-icon-circle p-0 delete-item">remove_circle</i>\n' +
+                    '                                    <i id="'+targetName+'-new-'+cntRow+'-rm-btn" \n' +
+                    '                                    class="btn material-icons delete-icon-circle p-0 delete-item">\n' +
+                    '                                    remove_circle</i>\n' +
+                    '                                </a>\n' +
+                    '                                <a href="" class="" data-toggle="modal">\n' +
+                    '                                    <i id="'+targetName+'-new-'+cntRow+'-rm-btn" \n' +
+                    '                                    class="btn material-icons delete-icon-circle p-0 delete-item text-success">\n' +
+                    '                                    check_circle</i>\n' +
                     '                                </a>\n' +
                     '                            </span>\n' +
                     '                        </div>\n';
+                '                        </li>\n';
                     $(targetId).append($strRow);
+
+                    $(hiddenTargetId).hide();
 
             });
 
@@ -47,6 +59,16 @@
                 console.log($(targetId));
                 $(targetId).remove();
             });
+
+//            $('#list01').sortable();
+            $('.sortable-group').sortable();
+
+            /*
+            $(document).on("click", ".sort-item-group", function () {
+                var targetId = "#"+$(this)[0]['id'];
+            });
+             */
+            // sort-item-group
 
         })(jQuery);
 
@@ -73,9 +95,91 @@ var cntRow = $('#const-database .row').length - 1 ;
 @endsection
 
 @section('content')
-    <pre>{{print_r($ary_env)}}</pre>
+    <ul id="list02" class="list-group sortable-group">
+        <li class="list-group-item">ぺんぎんクッキー</li>
+        <li class="list-group-item">らくだキャラメル</li>
+        <li class="list-group-item">しろくまアイス</li>
+        <li class="list-group-item">あひるケーキ</li>
+        <li class="list-group-item">ふくろうサブレ</li>
+    </ul>
 <div id="page-settings-const">
     <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+        <?php $cnt = 0; ?>
+        @foreach($ary_env as $key => $ary_const)
+            <div class="card">
+                <div class="card-header" role="tab" id="heading{{$cnt}}">
+                    <h5 class="mb-0">
+                        <a class="text-body d-block p-3 m-n3" data-toggle="collapse"
+                           href="#collapse{{ $cnt }}" role="button" aria-expanded="true" aria-controls="collapse{{ $cnt }}">
+                            {{ $key }}
+                        </a>
+                    </h5>
+                </div><!-- /.card-header -->
+                <div id="collapse{{$cnt}}" class="collapse show" role="tabpanel"
+                     aria-labelledby="heading{{$cnt}}" data-parent="#accordion">
+                    <div class="card-body">
+                        <div id="const-{{$key}}" class="">
+
+                    <?php $const_cnt = 0; ?>
+                            <ul id="list02" class="list-group sortable-group">
+                    @foreach($ary_const as $const_key => $const_val)
+                        <li id="{{$key}}-const-{{$const_cnt}}" class="list-group-item">
+                        <div class="row">
+                            <span class="col-md-1 form-group">
+                                <i class="material-icons p-0 move-icon">
+                                    reorder
+                                </i>
+                            </span>
+                            <div class="col-md-3 form-group">
+                                {{ $const_key }}
+                            </div>
+                            <div class="col-md-6 form-group">
+                                {{ $const_val }}
+                                {{--
+                                <input type="text" placeholder="value"
+                                       class="form-control" value="{{ $const_val }}">
+                                --}}
+                            </div>
+                            <span class="col-md-2 form-group float-left">
+                                <a href="" class="" data-toggle="modal">
+                                    <i id="{{$key}}-const-{{$const_cnt}}-rm-btn"
+                                       class="btn material-icons delete-icon-circle p-0 delete-item">
+                                        remove_circle
+                                    </i>
+                                </a>
+                                <a href="" class="" data-toggle="modal">
+                                    <i id="{{$key}}-const-{{$const_cnt}}-edit-btn"
+                                       class="btn material-icons delete-icon-circle p-0 edit-item">
+                                        edit
+                                    </i>
+                                </a>
+                            </span>
+                        </div>{{-- end row --}}
+                        </li>
+                        <?php $const_cnt = $const_cnt + 1; ?>
+                    @endforeach
+                        </ul>
+                        </div>{{-- end const-[$key] --}}
+                        <div class="row add-area" rowtype="newItem">
+                            <div class="col-md-1 form-group text-right">
+
+                            </div>
+                            <span class="col-md-11 form-group mt-3">
+                                <button id="add-item-{{$key}}" name="{{$key}}"
+                                        class="btn btn-info float-left add-icon-circle add-item"
+                                        data-toggle="modal">
+                                    <i class="material-icons add-icon-circle">add_circle</i>
+                                    <span class="">New</span>
+                                </button>
+                            </span>
+                        </div>
+
+                    </div>{{-- end card-body --}}
+                </div>{{-- end collapse[$cnt ] --}}
+            </div>{{-- end card --}}
+            <?php $cnt = $cnt + 1; ?>
+         @endforeach
+
         <div class="card">
             <div class="card-header" role="tab" id="heading1">
                 <h5 class="mb-0">
@@ -128,7 +232,7 @@ var cntRow = $('#const-database .row').length - 1 ;
                                 <button id="add-items" name="database"
                                         class="btn btn-info float-left add-icon-circle add-item"
                                         data-toggle="modal">
-                                    <i class="material-icons add-icon-circle"></i>
+                                    <i class="material-icons add-icon-circle">add_circle</i>
                                     <span class="">New</span>
                                 </button>
                         </span>
