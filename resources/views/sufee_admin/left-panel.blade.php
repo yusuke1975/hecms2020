@@ -124,6 +124,11 @@
                         <li><i class="menu-icon fa fa-paper-plane"></i><a href="pages-forget.html">Forget Pass</a></li>
                     </ul>
                 </li>
+                <h3 class="menu-title">sample</h3><!-- /.menu-title -->
+                <li>
+                    <a href="/SufeeAdmin/index.html" target="SufeeAdmin"> <i class="menu-icon fa fa-chain"></i>sample SufeeAdmin </a>
+                </li>
+
             </ul>
         </div><!-- /.navbar-collapse -->
     </nav>

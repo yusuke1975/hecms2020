@@ -11,6 +11,28 @@
     <script>
         (function($) {
 
+            /* 既存項目の編集 */
+            $(document).on("click", ".edit-item", function () {
+                var targetIdKey = $(this)[0]['id'].replace("edit-btn", "key");
+                var targetIdVal = $(this)[0]['id'].replace("edit-btn", "val");
+                var targetName = $(this)[0]['id'].substr(0, $(this)[0]['id'].indexOf('-'));
+                // var obj = $("#"+targetId).parent();
+                console.log("["+$("#"+targetIdKey)[0]["innerText"]+"]");
+                $("#"+targetIdKey)[0].innerHTML = "" +
+                    "<input type='text' placeholder='key name' class='form-control' value='"+$("#"+targetIdKey)[0]["innerText"]+"'>";
+                $("#"+targetIdVal)[0].innerHTML = "" +
+                    "<input type='text' placeholder='value' class='form-control' value='"+$("#"+targetIdVal)[0]["innerText"]+"'>";
+                console.log("targetName:["+targetName+"]");
+                console.log("targetIdKey:["+targetIdKey+"]");
+                console.log($("#"+targetIdKey));
+                console.log("["+$("#"+targetIdKey)[0]["innerText"]+"]");
+                console.log("targetIdVal:["+targetIdVal+"]");
+                console.log("["+$("#"+targetIdVal)[0]["innerText"]+"]");
+                // console.log(obj);
+
+            });
+
+
             /* 新規項目の追加 */
             $(document).on("click", ".add-item", function () {
                 var targetName = $(this)[0]['name'];
@@ -20,7 +42,7 @@
                 var targetId = '#const-'+targetName;
                 var hiddenTargetId = '#add-item-'+targetName;
                 var cntRow = $(targetId+' li').length + 1;
-                var $strRow ='                        <li id="'+targetName+'-new-'+cntRow+'" class="list-group-item  add-item">\n' +
+                var $strRow ='                        <li id="'+targetName+'-new-'+cntRow+'" class="list-group-item  add-item-area">\n' +
                     '                        <div class="row">\n' +
                     '                            <span class="col-md-1 form-group">\n' +
                     '                            <span class="badge badge-danger">New</span>\n' +
@@ -47,20 +69,43 @@
                 '                        </li>\n';
                     $(targetId).append($strRow);
 
+                    console.log("hide button:"+hiddenTargetId);
+
+                    // 新規項目が表示されている間の hide 設定
+                    // < Newボタン >
                     $(hiddenTargetId).hide();
+
+                    // 新規以外の < 項目削除ボタン >
+                    $(".btn-delete-"+targetName).hide();
+                    $(".btn-edit-"+targetName).hide();
+
+                    // sortable の一時解除
+                    $('.sortable-group').sortable({ disabled:true });
 
             });
 
             /* 項目の削除 */
             $(document).on("click", ".delete-item", function () {
                 var targetId = "#"+$(this)[0]['id'].replace("-rm-btn", "");
-
+                var targetName = targetId.substr(0, targetId.indexOf('-')).replace("#", "");
+                var showTargetId = "#add-item-"+targetName;
                 console.log("remove target id:["+targetId+"]");
-                console.log($(targetId));
+                if($(targetId).hasClass('add-item-area')){
+                    // 追加の項目を削除した場合は Newボタン を復活
+                    $(showTargetId).show();
+
+                    // 削除/編集ボタンの復活
+                    $(".btn-delete-"+targetName).show();
+                    $(".btn-edit-"+targetName).show();
+                    // sortable の復活
+                    $('.sortable-group').sortable({ disabled:false });
+                }
+
                 $(targetId).remove();
+
             });
 
-//            $('#list01').sortable();
+            /* 項目の移動設定 */
             $('.sortable-group').sortable();
 
             /*
@@ -72,41 +117,16 @@
 
         })(jQuery);
 
-        {{--
-var cntRow = $('#const-database .row').length - 1 ;
-                        $('#const-database').append('<input type="text">');
-                            <div class="row">
-                                <div class="col-md-2 form-group text-right">
-                                    const-1
-                                </div>
-                                <div class="col-md-9 form-group">
-                                    <input type="text" placeholder="value" class="form-control">
-                                </div>
-                                <span class="col-md-1 form-group">
-                                    <a href="#addEmployeeModal" class="" data-toggle="modal">
-                                        <i class="btn material-icons delete-icon-circle p-0">remove_circle</i>
-                                    </a>
-                                </span>
-                            </div>
-
-        --}}
     </script>
 
 @endsection
 
 @section('content')
-    <ul id="list02" class="list-group sortable-group">
-        <li class="list-group-item">ぺんぎんクッキー</li>
-        <li class="list-group-item">らくだキャラメル</li>
-        <li class="list-group-item">しろくまアイス</li>
-        <li class="list-group-item">あひるケーキ</li>
-        <li class="list-group-item">ふくろうサブレ</li>
-    </ul>
 <div id="page-settings-const">
     <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
         <?php $cnt = 0; ?>
         @foreach($ary_env as $key => $ary_const)
-            <div class="card">
+            <div class="card card-{{ $key }}">
                 <div class="card-header" role="tab" id="heading{{$cnt}}">
                     <h5 class="mb-0">
                         <a class="text-body d-block p-3 m-n3" data-toggle="collapse"
@@ -130,10 +150,10 @@ var cntRow = $('#const-database .row').length - 1 ;
                                     reorder
                                 </i>
                             </span>
-                            <div class="col-md-3 form-group">
+                            <div id="{{$key}}-const-{{$const_cnt}}-key" class="col-md-3 form-group key-area" value="{{ $const_key }}">
                                 {{ $const_key }}
                             </div>
-                            <div class="col-md-6 form-group">
+                            <div id="{{$key}}-const-{{$const_cnt}}-val" class="col-md-6 form-group val-area" value="{{ $const_val }}">
                                 {{ $const_val }}
                                 {{--
                                 <input type="text" placeholder="value"
@@ -141,15 +161,15 @@ var cntRow = $('#const-database .row').length - 1 ;
                                 --}}
                             </div>
                             <span class="col-md-2 form-group float-left">
-                                <a href="" class="" data-toggle="modal">
+                                <a class="" data-toggle="modal">
                                     <i id="{{$key}}-const-{{$const_cnt}}-rm-btn"
-                                       class="btn material-icons delete-icon-circle p-0 delete-item">
+                                       class="btn material-icons delete-icon-circle p-0 delete-item btn-delete-{{$key}}">
                                         remove_circle
                                     </i>
                                 </a>
-                                <a href="" class="" data-toggle="modal">
+                                <a class="" data-toggle="modal">
                                     <i id="{{$key}}-const-{{$const_cnt}}-edit-btn"
-                                       class="btn material-icons delete-icon-circle p-0 edit-item">
+                                       class="btn material-icons delete-icon-circle p-0 edit-item btn-edit-{{$key}}">
                                         edit
                                     </i>
                                 </a>
