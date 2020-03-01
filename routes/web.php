@@ -19,5 +19,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
- Route::post('/settings/general', 'Pages\Settings\GeneralController@index')->name('settings_general');
- Route::post('/settings/const', 'Pages\Settings\ConstController@index')->name('settings_const');
+Route::post('/settings/database', 'Pages\Settings\DatabaseController@index')->name('settings_db');
+Route::post('/settings/const', 'Pages\Settings\ConstController@index')->name('settings_const');
+Route::post('/settings/const2', 'Pages\Settings\Const2Controller@index')->name('settings_const2');
+Route::post('/settings/general', 'Pages\Settings\GeneralController@index')->name('settings_general');

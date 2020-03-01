@@ -13,27 +13,61 @@
 
             /* 既存項目の編集 */
             $(document).on("click", ".edit-item", function () {
-                var targetIdKey = $(this)[0]['id'].replace("edit-btn", "key");
-                var targetIdVal = $(this)[0]['id'].replace("edit-btn", "val");
+                var targetRowId  = $(this)[0]['id'].replace("-edit-btn", "");
+                var targetIdKey = targetRowId+"-key";
+                var targetIdVal = targetRowId+"-val";
                 var targetName = $(this)[0]['id'].substr(0, $(this)[0]['id'].indexOf('-'));
-                // var obj = $("#"+targetId).parent();
-                console.log("["+$("#"+targetIdKey)[0]["innerText"]+"]");
+                var constName = $(this)[0]['id'].substr(0, $(this)[0]['id'].indexOf('-callrow'));
+
+                /* delete btn change */
                 $("#"+targetIdKey)[0].innerHTML = "" +
-                    "<input type='text' placeholder='key name' class='form-control' value='"+$("#"+targetIdKey)[0]["innerText"]+"'>";
+                    "<input id='"+targetIdKey+"-key-input' type='text' placeholder='key name' class='form-control' value='"+$("#"+targetIdKey)[0]["innerText"]+"'>";
+                // const-env-bd-callrow-1-edit-btn
+                $("#"+targetRowId+"-delete-btn").hide();
+                $("#"+targetRowId+"-cancel-btn").show();
+
+                /* edit btn change */
                 $("#"+targetIdVal)[0].innerHTML = "" +
-                    "<input type='text' placeholder='value' class='form-control' value='"+$("#"+targetIdVal)[0]["innerText"]+"'>";
-                console.log("targetName:["+targetName+"]");
-                console.log("targetIdKey:["+targetIdKey+"]");
-                console.log($("#"+targetIdKey));
-                console.log("["+$("#"+targetIdKey)[0]["innerText"]+"]");
-                console.log("targetIdVal:["+targetIdVal+"]");
-                console.log("["+$("#"+targetIdVal)[0]["innerText"]+"]");
-                // console.log(obj);
+                    "<input id='"+targetIdVal+"-key-input' type='text' placeholder='value' class='form-control' value='"+$("#"+targetIdVal)[0]["innerText"]+"'>";
+                /* id chenge delete to cancel */
+                $("#"+targetRowId+"-edit-btn").hide();
+                $("#"+targetRowId+"-save-btn").show();
+
+                /* ########## hide settings ########## */
+                /* hide mew button */
+                $("#"+constName+"-addnew-btn").hide();
+
+                /* hide delete & edit button */
+                $("."+constName+"-callrow-delete-btn").hide();
+                $("."+constName+"-callrow-edit-btn").hide();
+
+                /* sortable の一時解除 */
+                $('.sortable-group').sortable({ disabled:true });
 
             });
 
+            /* #################################
+            項目編集中のキャンセルボタン押下
+             ################################ */
+            $(document).on("click", ".const-env-bd-callrow-cancel-btn", function () {
+                console.log("【START】<click> [.const-env-bd-callrow-cancel-btn]");
+                //             <div id="const-{ $key }" class="card card-{ $key }"> const-env-bd-callspace
 
-            /* 新規項目の追加 */
+                console.log($(this)[0]['id']+"-bd-callspace");
+                console.log("【END】<click> [.const-env-bd-callrow-cancel-btn]");
+            });
+
+            $(document).on("click", ".card", function () {
+                console.log("【START】<click> [.card]");
+                // $("#"+$(this)[0]['id']+"-bd-callspace").toggle( "show" );
+//                $("#"+$(this)[0]['id']+"-bd-callspace").addClass("show");
+                console.log($(this)[0]['id']+"-bd-callspace");
+                console.log("【END】<click> [.card]");
+            });
+
+            /* #################################
+            新規項目の追加
+             ################################ */
             $(document).on("click", ".add-item", function () {
                 var targetName = $(this)[0]['name'];
                 console.log(targetName);
@@ -86,7 +120,7 @@
 
             /* 項目の削除 */
             $(document).on("click", ".delete-item", function () {
-                var targetId = "#"+$(this)[0]['id'].replace("-rm-btn", "");
+                var targetId = "#"+$(this)[0]['id'].replace("-delete-btn", "");
                 var targetName = targetId.substr(0, targetId.indexOf('-')).replace("#", "");
                 var showTargetId = "#add-item-"+targetName;
                 console.log("remove target id:["+targetId+"]");
@@ -123,69 +157,86 @@
 
 @section('content')
 <div id="page-settings-const">
-    <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
-        <?php $cnt = 0; ?>
+    <div id="accordion" class="accordion" role="tablist" aria-multiselectable="true">
+        <?php $cnt = 1; ?>
+        <?php $body_show = " show"; ?>
         @foreach($ary_env as $key => $ary_const)
-            <div class="card card-{{ $key }}">
-                <div class="card-header" role="tab" id="heading{{$cnt}}">
+            <div id="const-{{ $key }}" class="card card-{{ $key }}">
+                <div id="const-{{$key}}-header" class="card-header" role="tab">
                     <h5 class="mb-0">
-                        <a class="text-body d-block p-3 m-n3" data-toggle="collapse"
-                           href="#collapse{{ $cnt }}" role="button" aria-expanded="true" aria-controls="collapse{{ $cnt }}">
+                        <a class="text-body d-block p-3 m-n3 collapsed" data-toggle="collapse"
+                           href="#const-{{$key}}-bd-callspace" role="button" aria-expanded="true" aria-controls="const-{{$key}}-bd-callspace">
                             {{ $key }}
                         </a>
                     </h5>
                 </div><!-- /.card-header -->
-                <div id="collapse{{$cnt}}" class="collapse show" role="tabpanel"
-                     aria-labelledby="heading{{$cnt}}" data-parent="#accordion">
+                <div id="const-{{$key}}-bd-collapsed" class="collapse{{$body_show}}" role="tabpanel"
+                     aria-labelledby="const-{{$key}}-header" data-parent="#accordion">
                     <div class="card-body">
-                        <div id="const-{{$key}}" class="">
+                        <div id="const-{{$key}}-body" class="">
 
                     <?php $const_cnt = 0; ?>
-                            <ul id="list02" class="list-group sortable-group">
+                            <ul id="const-{{$key}}-bd-callspace" class="list-group sortable-group">
                     @foreach($ary_const as $const_key => $const_val)
-                        <li id="{{$key}}-const-{{$const_cnt}}" class="list-group-item">
-                        <div class="row">
-                            <span class="col-md-1 form-group">
-                                <i class="material-icons p-0 move-icon">
-                                    reorder
-                                </i>
-                            </span>
-                            <div id="{{$key}}-const-{{$const_cnt}}-key" class="col-md-3 form-group key-area" value="{{ $const_key }}">
-                                {{ $const_key }}
-                            </div>
-                            <div id="{{$key}}-const-{{$const_cnt}}-val" class="col-md-6 form-group val-area" value="{{ $const_val }}">
-                                {{ $const_val }}
-                                {{--
-                                <input type="text" placeholder="value"
-                                       class="form-control" value="{{ $const_val }}">
-                                --}}
-                            </div>
-                            <span class="col-md-2 form-group float-left">
-                                <a class="" data-toggle="modal">
-                                    <i id="{{$key}}-const-{{$const_cnt}}-rm-btn"
-                                       class="btn material-icons delete-icon-circle p-0 delete-item btn-delete-{{$key}}">
-                                        remove_circle
-                                    </i>
-                                </a>
-                                <a class="" data-toggle="modal">
-                                    <i id="{{$key}}-const-{{$const_cnt}}-edit-btn"
-                                       class="btn material-icons delete-icon-circle p-0 edit-item btn-edit-{{$key}}">
-                                        edit
-                                    </i>
-                                </a>
-                            </span>
-                        </div>{{-- end row --}}
-                        </li>
+                                <li id="const-{{$key}}-bd-callrow-{{$cnt}}" class="list-group-item">
+                                    <div class="row">
+                                        <span class="col-md-1 form-group">
+                                            <i class="material-icons p-0 move-icon">
+                                                reorder
+                                            </i>
+                                        </span>
+                                        <div id="const-{{$key}}-bd-callrow-{{$cnt}}-key"
+                                             class="col-md-3 form-group key-area" value="{{ $const_key }}">
+                                            <span id="const-{{$key}}-bd-callrow-{{$cnt}}-key-label">{{ $const_key }}</span>
+                                        </div>
+                                        <div id="const-{{$key}}-bd-callrow-{{$cnt}}-val"
+                                             class="col-md-6 form-group val-area" value="{{ $const_val }}">
+                                            <span id="const-{{$key}}-bd-callrow-{{$cnt}}-val-label">{{ $const_val }}</span>
+                                            {{--
+                                            <input type="text" placeholder="value"
+                                                   class="form-control" value="{{ $const_val }}">
+                                            --}}
+                                        </div>
+                                        <span class="col-md-2 form-group float-left">
+                                            <a class="" data-toggle="modal">
+                                                <i id="const-{{$key}}-bd-callrow-{{$cnt}}-delete-btn"
+                                                   class="btn material-icons p-0 delete-item const-{{$key}}-bd-callrow-delete-btn">
+                                                    remove_circle
+                                                </i>
+                                            </a>
+                                            <a class="" data-toggle="modal">
+                                                <i id="const-{{$key}}-bd-callrow-{{$cnt}}-edit-btn"
+                                                   class="btn material-icons p-0 edit-item const-{{$key}}-bd-callrow-edit-btn">
+                                                    edit
+                                                </i>
+                                            </a>
+                                            <a class="" data-toggle="modal">
+                                                <i id="const-{{$key}}-bd-callrow-{{$cnt}}-cancel-btn"
+                                                   class="btn material-icons p-0 cancel-item const-{{$key}}-bd-callrow-cancel-btn text-danger"
+                                                    style="display: none;">
+                                                    cancel
+                                                </i>
+                                            </a>
+                                            <a class="" data-toggle="modal">
+                                                <i id="const-{{$key}}-bd-callrow-{{$cnt}}-save-btn"
+                                                   class="btn material-icons p-0 save-item const-{{$key}}-bd-callrow-save-btn text-success"
+                                                   style="display: none;">
+                                                    check_circle
+                                                </i>
+                                            </a>
+                                        </span>
+                                    </div>{{-- end row --}}
+                                </li>
                         <?php $const_cnt = $const_cnt + 1; ?>
                     @endforeach
-                        </ul>
+                            </ul>
                         </div>{{-- end const-[$key] --}}
                         <div class="row add-area" rowtype="newItem">
                             <div class="col-md-1 form-group text-right">
 
                             </div>
                             <span class="col-md-11 form-group mt-3">
-                                <button id="add-item-{{$key}}" name="{{$key}}"
+                                <button id="const-{{$key}}-bd-addnew-btn" name="{{$key}}"
                                         class="btn btn-info float-left add-icon-circle add-item"
                                         data-toggle="modal">
                                     <i class="material-icons add-icon-circle">add_circle</i>
@@ -198,18 +249,19 @@
                 </div>{{-- end collapse[$cnt ] --}}
             </div>{{-- end card --}}
             <?php $cnt = $cnt + 1; ?>
-         @endforeach
+            <?php $body_show = ""; ?>
+            @endforeach
 
         <div class="card">
             <div class="card-header" role="tab" id="heading1">
                 <h5 class="mb-0">
                     <a class="text-body d-block p-3 m-n3" data-toggle="collapse"
-                       href="#collapse1" role="button" aria-expanded="true" aria-controls="collapse1">
+                       href="#collapse2" role="button" aria-expanded="false" aria-controls="collapse2">
                         database
                     </a>
                 </h5>
             </div><!-- /.card-header -->
-            <div id="collapse1" class="collapse show" role="tabpanel"
+            <div id="collapse2" class="collapse" role="tabpanel"
                  aria-labelledby="heading1" data-parent="#accordion">
                 <div class="card-body">
                     <div id="const-database">
@@ -264,15 +316,44 @@
             <div class="card-header" role="tab" id="heading2">
                 <h5 class="mb-0">
                     <a class="collapsed text-body d-block p-3 m-n3" data-toggle="collapse"
-                       href="#collapse2" role="button" aria-expanded="false" aria-controls="collapse2">
+                       href="#collapse3" role="button" aria-expanded="false" aria-controls="collapse3">
                         application
                     </a>
                 </h5>
             </div><!-- /.card-header -->
-            <div id="collapse2" class="collapse" role="tabpanel"
+            <div id="collapse3" class="collapse" role="tabpanel"
                  aria-labelledby="heading2" data-parent="#accordion">
                 <div class="card-body">
-                    mail
+                    <div id="const-application">
+                        <div id="application-const-1" class="row">
+                            <span class="col-md-1 form-group">
+                            </span>
+                            <div class="col-md-2 form-group text-right">
+                                const-1
+                            </div>
+                            <div class="col-md-8 form-group">
+                                <input type="text" placeholder="value" class="form-control">
+                            </div>
+                            <span class="col-md-1 form-group">
+                                <a href="" class="" data-toggle="modal">
+                                    <i id="application-const-1-rm-btn" class="btn material-icons delete-icon-circle p-0 delete-item">remove_circle</i>
+                                </a>
+                            </span>
+                        </div>
+                        <div class="row" rowtype="newItem">
+                            <div class="col-md-2 form-group text-right">
+
+                            </div>
+                            <span class="col-md-10 form-group">
+                                <button id="add-items" name="database"
+                                        class="btn btn-info float-left add-icon-circle add-item"
+                                        data-toggle="modal">
+                                    <i class="material-icons add-icon-circle">add_circle</i>
+                                    <span class="">New</span>
+                                    </button>
+                            </span>
+                        </div>
+                    </div>
                 </div><!-- /.card-body -->
             </div><!-- /.collapse -->
         </div><!-- /.card -->
@@ -280,12 +361,12 @@
             <div class="card-header" role="tab" id="heading3">
                 <h5 class="mb-0">
                     <a class="collapsed text-body d-block p-3 m-n3" data-toggle="collapse"
-                       href="#collapse3" role="button" aria-expanded="false" aria-controls="collapse3">
+                       href="#collapse4" role="button" aria-expanded="false" aria-controls="collapse4">
                         aws
                     </a>
                 </h5>
             </div><!-- /.card-header -->
-            <div id="collapse3" class="collapse" role="tabpanel"
+            <div id="collapse4" class="collapse" role="tabpanel"
                  aria-labelledby="heading3" data-parent="#accordion">
                 <div class="card-body">
                     アイテム3のコンテンツ
@@ -296,12 +377,12 @@
             <div class="card-header" role="tab" id="heading4">
                 <h5 class="mb-0">
                     <a class="collapsed text-body d-block p-3 m-n3" data-toggle="collapse"
-                       href="#collapse4" role="button" aria-expanded="false" aria-controls="collapse4">
+                       href="#collapse5" role="button" aria-expanded="false" aria-controls="collapse5">
                         pusher
                     </a>
                 </h5>
             </div><!-- /.card-header -->
-            <div id="collapse4" class="collapse" role="tabpanel"
+            <div id="collapse5" class="collapse" role="tabpanel"
                  aria-labelledby="heading4" data-parent="#accordion">
                 <div class="card-body">
                     アイテム3のコンテンツ
@@ -312,12 +393,12 @@
             <div class="card-header" role="tab" id="heading5">
                 <h5 class="mb-0">
                     <a class="collapsed text-body d-block p-3 m-n3" data-toggle="collapse"
-                       href="#collapse5" role="button" aria-expanded="false" aria-controls="collapse5">
+                       href="#collapse6" role="button" aria-expanded="false" aria-controls="collapse6">
                         timezone
                     </a>
                 </h5>
             </div><!-- /.card-header -->
-            <div id="collapse5" class="collapse" role="tabpanel"
+            <div id="collapse6" class="collapse" role="tabpanel"
                  aria-labelledby="heading5" data-parent="#accordion">
                 <div class="card-body">
                     アイテム3のコンテンツ
@@ -328,12 +409,12 @@
             <div class="card-header" role="tab" id="heading6">
                 <h5 class="mb-0">
                     <a class="collapsed text-body d-block p-3 m-n3" data-toggle="collapse"
-                       href="#collapse6" role="button" aria-expanded="false" aria-controls="collapse6">
+                       href="#collapse7" role="button" aria-expanded="false" aria-controls="collapse7">
                         theme
                     </a>
                 </h5>
             </div><!-- /.card-header -->
-            <div id="collapse6" class="collapse" role="tabpanel"
+            <div id="collapse7" class="collapse" role="tabpanel"
                  aria-labelledby="heading6" data-parent="#accordion">
                 <div class="card-body">
                     アイテム3のコンテンツ

@@ -110,6 +110,18 @@
                             </form>
                         </li>
                         <li>
+                            <i class="material-icons">storage</i>
+                            <a href="{{ route('settings_db') }}"
+                               onclick="event.preventDefault();
+                                                     document.getElementById('form_settings_db').submit();">
+                                <span>Database</span>
+                            </a>
+                            <form id="form_settings_db" action="{{ route('settings_db') }}"
+                                  method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </li>
+                        <li>
                             <i class="material-icons">list</i>
                             <a href="{{ route('settings_const') }}"
                                onclick="event.preventDefault();
@@ -117,6 +129,18 @@
                                 <span>Const</span>
                             </a>
                             <form id="form_settings_const" action="{{ route('settings_const') }}"
+                                  method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </li>
+                        <li>
+                            <i class="material-icons">list</i>
+                            <a href="{{ route('settings_const2') }}"
+                               onclick="event.preventDefault();
+                                                     document.getElementById('form_settings_const2').submit();">
+                                <span>Const 2</span>
+                            </a>
+                            <form id="form_settings_const2" action="{{ route('settings_const2') }}"
                                   method="POST" style="display: none;">
                                 @csrf
                             </form>

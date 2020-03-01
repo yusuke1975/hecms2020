@@ -7,7 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
-class ConstController extends Controller
+class Const2Controller extends Controller
 {
     /**
      * Create a new controller instance.
@@ -48,6 +48,6 @@ class ConstController extends Controller
             }
             $tmp_cnt++;
         }
-        return view('pages.settings.const', compact('page_name', 'breadcrumbs', 'ary_env'));
+        return view('pages.settings.const2', compact('page_name', 'breadcrumbs', 'ary_env'));
     }
 }

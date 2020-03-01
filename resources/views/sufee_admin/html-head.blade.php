@@ -7,8 +7,8 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="apple-touch-icon" href="apple-icon.png">
-    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-icon.png">
+    <link rel="shortcut icon" href="/favicon.ico">
 
     <link rel="stylesheet" href="{{ asset('vendors/jquery-ui/jquery-ui.css') }}">
     <link rel="stylesheet" href="{{ asset('vendors/bootstrap/dist/css/bootstrap.min.css') }}">
@@ -35,13 +35,16 @@
     <script src="{{ asset('vendors/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
 
+    {{--
     <script src="{{ asset('vendors/chart.js/dist/Chart.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/js/dashboard.js') }}"></script>
     <script src="{{ asset('assets/js/widgets.js') }}"></script>
+    --}}
     <script src="{{ asset('vendors/jqvmap/dist/jquery.vmap.min.js') }}"></script>
     <script src="{{ asset('vendors/jqvmap/examples/js/jquery.vmap.sampledata.js') }}"></script>
     <script src="{{ asset('vendors/jqvmap/dist/maps/jquery.vmap.world.js') }}"></script>
     <script>
+/*
         (function($) {
             "use strict";
 
@@ -58,6 +61,7 @@
                 normalizeFunction: 'polynomial'
             });
         })(jQuery);
+ */
     </script>
 
     @yield('page-foot')
