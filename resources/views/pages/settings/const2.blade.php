@@ -33,6 +33,83 @@
 <div id="page-settings-const">
     <div id="accordion" class="accordion" role="tablist" aria-multiselectable="true">
 
+<?php
+        $ary_env = array(
+            "aaa" => array(
+                "key-aa1-a" =>array("val-aa1-a"),
+                "key-aa2-a" => array("val-aa2-a"),
+                "key-aa3-a" => array("val-aa3-a"),
+            ),
+            "bbb" => array(
+                "key-bb1-a" => array("val-bb1-b"),
+                "key-bb2-a" => array("val-bb2-b"),
+                "key-bb3-a" => array("val-bb3-b"),
+            ),
+        );
+?>
+    <?php $const_cnt = 1; ?>
+    @foreach($ary_env as $const_name => $const_ary)
+        <?php
+//        $collapse_head = " collapsed";
+//        $collapse_show = " show";
+        $collapse_head = "";
+        $collapse_show = "";
+        ?>
+        <div id="const-{{$const_name}}" class="card">
+            <div id="const-{{$const_name}}-header" class="card-header" role="tab">
+                <h5 class="mb-0">
+                    <a class="text-body d-block p-3 m-n3" data-toggle="collapse"
+                       href="#const-bd-{{ $const_name }}" role="button" aria-expanded="false" aria-controls="collapse-{{ $const_name }}">
+                        {{ $const_name }}
+                    </a>
+                </h5>
+            </div><!-- /.card-header -->
+            <div id="const-{{ $const_name }}-body" class="collapse-{{ $const_name }} card-body collapse" role="tabpanel"
+                 aria-labelledby="const-{{$const_name}}-header" data-parent="#accordion">
+                    <div id="const-{{ $const_name }}-collapse">
+
+                <?php $row_cnt = 1; ?>
+                @foreach($const_ary as $const_key => $const_val)
+                        <div id="const-{{$const_name}}-row-{{ $row_cnt  }}" class="row">
+                            <span class="col-md-1 form-group">
+                            </span>
+                                <div class="col-md-2 form-group text-right">
+                                    {{ $const_key  }}
+                                </div>
+                                <div class="col-md-8 form-group">
+                                    <input type="text" placeholder="value" class="form-control">
+                                </div>
+                            <span class="col-md-1 form-group">
+                                <a href="" class="" data-toggle="modal">
+                                    <i id="database-const-1-rm-btn" class="btn material-icons delete-icon-circle p-0 delete-item">remove_circle</i>
+                                </a>
+                            </span>
+                        </div>
+                        <?php
+                        $collapse_head = "";
+                        $collapse_show = "";
+                        $row_cnt++;
+                            ?>
+                @endforeach
+                    </div>
+                    <div class="row" rowtype="newItem">
+                        <div class="col-md-2 form-group text-right">
+
+                        </div>
+                        <span class="col-md-10 form-group">
+                            <button id="add-items" name="database"
+                                    class="btn btn-info float-left add-icon-circle add-item"
+                                    data-toggle="modal">
+                                <i class="material-icons add-icon-circle">add_circle</i>
+                                <span class="">New</span>
+                            </button>
+                    </span>
+                    </div>
+            </div><!-- /.collapse -->
+        </div><!-- /.card -->
+        <?php $const_cnt++; ?>
+    @endforeach
+
         <div class="card">
             <div class="card-header" role="tab" id="heading1">
                 <h5 class="mb-0">
@@ -42,7 +119,7 @@
                     </a>
                 </h5>
             </div><!-- /.card-header -->
-            <div id="collapse2" class="collapse" role="tabpanel"
+            <div id="collapse2" class="collapse show" role="tabpanel"
                  aria-labelledby="heading1" data-parent="#accordion">
                 <div class="card-body">
                     <div id="const-database">
@@ -93,6 +170,9 @@
                 </div><!-- /.card-body -->
             </div><!-- /.collapse -->
         </div><!-- /.card -->
+    {{--
+    --}}
+{{--
         <div class="card">
             <div class="card-header" role="tab" id="heading2">
                 <h5 class="mb-0">
@@ -205,6 +285,7 @@
                 </div><!-- /.card-body -->
             </div><!-- /.collapse -->
         </div><!-- /.card -->
+end cards--}}
     </div><!-- /#accordion -->
 </div>
 @endsection{{-- content --}}
