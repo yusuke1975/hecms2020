@@ -50,26 +50,39 @@
             ),
         );
 ?>
-    <?php $const_cnt = 1; ?>
-    @foreach($ary_env as $const_name => $const_ary)
-        <div class="card">
-            <div class="card-header" role="tab" id="heading1">
+    <?php
+        $forms_name = "forms-type-a";
+        $card_cnt = 1;
+        ?>
+    @foreach($ary_env as $card_key_name => $card_ary)
+        <?php
+            $card_name = $forms_name."-".$card_key_name;
+        ?>
+        {{-- card --}}
+        <div id="{{ $card_name }}" class="card">
+            {{-- card header --}}
+            <div id="{{ $card_name }}-header" class="card-header" role="tab">
                 <h5 class="mb-0">
                     <a class="text-body d-block p-3 m-n3" data-toggle="collapse"
-                       href="#collapse2" role="button" aria-expanded="false" aria-controls="collapse2">
-                        database
+                       href="#{{ $card_name }}-body" role="button" aria-expanded="false" aria-controls="{{ $card_name }}-body">
+                        {{ $card_key_name }}
                     </a>
                 </h5>
-            </div><!-- /.card-header -->
-            <div id="collapse2" class="collapse" role="tabpanel"
-                 aria-labelledby="heading1" data-parent="#accordion">
-                <div class="card-body">
-                    <div id="const-database">
-                        <div id="database-const-1" class="row">
+            </div>{{-- card header --}}
+            {{-- card body --}}
+            <div id="{{ $card_name }}-body" class="collapse" role="tabpanel"
+                 aria-labelledby="{{ $card_name }}-header" data-parent="#accordion">
+                {{-- card rows --}}
+                <div id="{{ $card_name }}-rows" class="card-body">
+
+                    <?php $card_row_cnt = 1; ?>
+                    {{-- card row --}}
+                    @foreach($card_ary as $card_row_key => $card_row_val)
+                        <div id="{{ $card_name }}-row-{{ $card_row_cnt }}" class="row">
                             <span class="col-md-1 form-group">
                             </span>
                             <div class="col-md-2 form-group text-right">
-                                const-1
+                                {{ $card_row_key }}
                             </div>
                             <div class="col-md-8 form-group">
                                 <input type="text" placeholder="value" class="form-control">
@@ -79,7 +92,29 @@
                                     <i id="database-const-1-rm-btn" class="btn material-icons delete-icon-circle p-0 delete-item">remove_circle</i>
                                 </a>
                             </span>
-                        </div>
+                        </div>{{-- end row --}}
+                        <?php $card_row_cnt++; ?>
+                    @endforeach
+                </div>{{-- end card rows --}}
+                {{-- add new area --}}
+                <div id="{{ $card_name }}-addnew-{{ $card_row_cnt }}" class="row" rowtype="newItem">
+                    <div class="col-md-2 form-group text-right">
+
+                    </div>
+                    <span class="col-md-10 form-group">
+                        <button id="{{ $card_name }}-addnew-{{ $card_row_cnt }}-btn" name="{{ $card_key_name }}"
+                                class="btn btn-info float-left add-icon-circle add-item"
+                                data-toggle="modal">
+                            <i class="material-icons add-icon-circle">add_circle</i>
+                            <span class="">New</span>
+                        </button>
+                    </span>
+                </div>{{-- end add new --}}
+            </div>{{-- end card body --}}
+        </div>{{-- end card --}}
+    @endforeach
+
+                            {{--
                         <div class="row">
                             <span class="col-md-1 form-group">
                             </span>
@@ -96,23 +131,7 @@
                             </span>
                         </div>
                     </div>
-                    <div class="row" rowtype="newItem">
-                        <div class="col-md-2 form-group text-right">
-
-                        </div>
-                        <span class="col-md-10 form-group">
-                                <button id="add-items" name="database"
-                                        class="btn btn-info float-left add-icon-circle add-item"
-                                        data-toggle="modal">
-                                    <i class="material-icons add-icon-circle">add_circle</i>
-                                    <span class="">New</span>
-                                </button>
-                        </span>
-                    </div>
-                </div><!-- /.card-body -->
-            </div><!-- /.collapse -->
-        </div><!-- /.card -->
-    @endforeach
+--}}
 
     {{--
         <div class="card">
