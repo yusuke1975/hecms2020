@@ -1,9 +1,8 @@
 @extends('sufee_admin.app')
+@include('plugin.editformmulticard')
 
 @section('page-head')
-{{--
-    <link rel="stylesheet" href="{{ asset('assets/css/page_settings_const.css') }}">
---}}
+    <link rel="stylesheet" href="{{ asset('assets/css/page_settings_const2.css.php') }}">
 @endsection
 
 @section('page-foot')
@@ -51,34 +50,35 @@
         );
 ?>
     <?php
-        $forms_name = "forms-type-a";
+        $plugin_name = "forms-type-a";
         $card_cnt = 1;
         ?>
     @foreach($ary_env as $card_key_name => $card_ary)
         <?php
-            $card_name = $forms_name."-".$card_key_name;
+            $card_name = $plugin_name."-".$card_key_name;
         ?>
         {{-- card --}}
-        <div id="{{ $card_name }}" class="card">
+        <div id="{{ $card_name }}" class="card {{ $plugin_name }}-card">
             {{-- card header --}}
-            <div id="{{ $card_name }}-header" class="card-header" role="tab">
+            <div id="{{ $card_name }}-header" class="{{ $plugin_name }}-card-header card-header" role="tab">
                 <h5 class="mb-0">
                     <a class="text-body d-block p-3 m-n3" data-toggle="collapse"
-                       href="#{{ $card_name }}-body" role="button" aria-expanded="false" aria-controls="{{ $card_name }}-body">
+                       href="#{{ $card_name }}-body" role="button" aria-expanded="false"
+                       aria-controls="{{ $card_name }}-body">
                         {{ $card_key_name }}
                     </a>
                 </h5>
             </div>{{-- card header --}}
             {{-- card body --}}
-            <div id="{{ $card_name }}-body" class="collapse" role="tabpanel"
+            <div id="{{ $card_name }}-body" class="collapse {{ $plugin_name }}-body" role="tabpanel"
                  aria-labelledby="{{ $card_name }}-header" data-parent="#accordion">
                 {{-- card rows --}}
-                <div id="{{ $card_name }}-rows" class="card-body">
+                <div id="{{ $card_name }}-rows" class="card-body {{ $plugin_name }}-rows">
 
                     <?php $card_row_cnt = 1; ?>
                     {{-- card row --}}
                     @foreach($card_ary as $card_row_key => $card_row_val)
-                        <div id="{{ $card_name }}-row-{{ $card_row_cnt }}" class="row">
+                        <div id="{{ $card_name }}-row-{{ $card_row_cnt }}" class="row {{ $plugin_name }}-row">
                             <span class="col-md-1 form-group">
                             </span>
                             <div class="col-md-2 form-group text-right">
@@ -89,7 +89,9 @@
                             </div>
                             <span class="col-md-1 form-group">
                                 <a href="" class="" data-toggle="modal">
-                                    <i id="database-const-1-rm-btn" class="btn material-icons delete-icon-circle p-0 delete-item">remove_circle</i>
+                                    <i id="{{ $card_name }}-{{ $card_row_cnt }}-delete-btn"
+                                       class="btn material-icons delete-icon-circle p-0 delete-item"
+                                    >remove_circle</i>
                                 </a>
                             </span>
                         </div>{{-- end row --}}
@@ -97,13 +99,13 @@
                     @endforeach
                 </div>{{-- end card rows --}}
                 {{-- add new area --}}
-                <div id="{{ $card_name }}-addnew-{{ $card_row_cnt }}" class="row" rowtype="newItem">
+                <div id="{{ $card_name }}-addnew" class="row {{ $plugin_name }}-addnew" rowtype="newItem">
                     <div class="col-md-2 form-group text-right">
 
                     </div>
                     <span class="col-md-10 form-group">
-                        <button id="{{ $card_name }}-addnew-{{ $card_row_cnt }}-btn" name="{{ $card_key_name }}"
-                                class="btn btn-info float-left add-icon-circle add-item"
+                        <button id="{{ $card_name }}-addnew-btn" name="{{ $card_key_name }}"
+                                class="btn btn-info float-left add-icon-circle add-item {{ $plugin_name }}-addnew-btn"
                                 data-toggle="modal">
                             <i class="material-icons add-icon-circle">add_circle</i>
                             <span class="">New</span>
