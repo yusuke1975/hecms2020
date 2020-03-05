@@ -64,36 +64,42 @@
                                 </i>
                             </span>
                             <div class="col-md-3 form-group">
-                                {{ $card_row_key }}
+                                {{-- label --}}
+                                <span id="{{ $card_name }}-row-{{ $card_row_cnt }}-key-label">{{ $card_row_key }}</span>
+                                <input id="{{ $card_name }}-row-{{ $card_row_cnt }}-key-input"
+                                       type="text" placeholder="value"
+                                       class="form-control" value="{{ $card_row_key }}"
+                                       style="display: none;">
                             </div>
                             <div class="col-md-7 form-group">
-                                {{ $card_row_val }}
-                                <input type="text" placeholder="value"
+                                <span id="{{ $card_name }}-row-{{ $card_row_cnt }}-val-label">{{ $card_row_val }}</span>
+                                <input id="{{ $card_name }}-row-{{ $card_row_cnt }}-val-input"
+                                        type="text" placeholder="value"
                                         class="form-control" value="{{ $card_row_val }}"
                                         style="display: none;">
                             </div>
                             <span class="col-md-1 form-group">
-                                <a href="" class="" data-toggle="modal">
-                                    <i id="{{ $card_name }}-row-{{ $card_row_cnt }}-delete-btn"
-                                       class="btn material-icons p-0 delete-item"
+                                <a class="" data-toggle="modal">
+                                    <i id="{{ $card_name }}-row-{{ $card_row_cnt }}-delete-icon"
+                                       class="btn material-icons p-0 delete-icons {{ $card_name }}-delete-icons"
                                        row="{{ $card_row_cnt }}"
                                     >remove_circle</i>
                                 </a>
-                                <a href="" class="" data-toggle="modal">
-                                    <i id="{{ $card_name }}-row-{{ $card_row_cnt }}-edit-btn"
-                                       class="btn material-icons p-0 edit-item"
+                                <a class="" data-toggle="modal">
+                                    <i id="{{ $card_name }}-row-{{ $card_row_cnt }}-edit-icon"
+                                       class="btn material-icons p-0 edit-icons {{ $card_name }}-edit-icons"
                                     >create</i>
                                 </a>
                                 <a class="" data-toggle="modal">
-                                    <i id="{{ $card_name }}-row-{{ $card_row_cnt }}-cancel-btn"
-                                       class="btn material-icons p-0 cancel-item text-danger"
+                                    <i id="{{ $card_name }}-row-{{ $card_row_cnt }}-cancel-icon"
+                                       class="btn material-icons p-0 cancel-icons {{ $card_name }}-cancel-icons text-danger"
                                        style="display: none;">
                                         cancel
                                     </i>
                                 </a>
                                 <a class="" data-toggle="modal">
-                                    <i id="{{ $card_name }}-row-{{ $card_row_cnt }}-save-btn"
-                                       class="btn material-icons p-0 save-item text-success"
+                                    <i id="{{ $card_name }}-row-{{ $card_row_cnt }}-save-icon"
+                                       class="btn material-icons p-0 save-icons {{ $card_name }}-save-icons text-success"
                                        style="display: none;">
                                         check_circle
                                     </i>
@@ -139,7 +145,7 @@
             /* ################################
             行の削除
             ################################ */
-            $(document).on("click", ".delete-item", function () {
+            $(document).on("click", ".delete-icons", function () {
                 $("#"+$(this)[0]['id'].replace("-delete-btn", "")).remove();
                 /*
                 var targetIdObj = $("#"+$(this)[0]['id'].replace("-delete-btn", ""));
@@ -150,26 +156,37 @@
             /* ################################
             行の編集
             ################################ */
-            $(document).on("click", ".edit-item", function () {
+            $(document).on("click", ".edit-icons", function () {
                 var targetId = "#"+$(this)[0]['id'].replace("-edit-btn", "");
+                var targetClass = targetId.substr(0, targetId.indexOf('-row')).replace("#", ".");
+
+                console.log("targetClass : ["+targetClass+"]");
+                console.log("targetId : ["+targetId+"]");
+
+                $(targetClass+"-delete-icons").hide();
+                $(targetClass+"-edit-icons").hide();
+
                 rowIconSwitch(targetId, 2);
+                targetInputSwitch(targetId, 2);
             });
 
             /* ################################
             行の編集 キャンセル
             ################################ */
-            $(document).on("click", ".cancel-item", function () {
+            $(document).on("click", ".cancel-icons", function () {
                 var targetId = "#"+$(this)[0]['id'].replace("-cancel-btn", "");
                 rowIconSwitch(targetId, 1);
+                targetInputSwitch(targetId, 1);
 
             });
 
             /* ################################
             行の編集 保存
             ################################ */
-            $(document).on("click", ".save-item", function () {
+            $(document).on("click", ".save-icons", function () {
                 var targetId = "#"+$(this)[0]['id'].replace("-save-btn", "");
                 rowIconSwitch(targetId, 1);
+                targetInputSwitch(targetId, 1);
 
             });
 
@@ -182,38 +199,55 @@
             custom functions
             ################################ */
             function rowIconSwitch(targetId, showTrue){
-
+                console.log(targetId);
                 if(showTrue==1){
                     // mode 'default'
-                    $(targetId+"-edit-btn").show();
-                    $(targetId+"-delete-btn").show();
-                    $(targetId+"-cancel-btn").hide();
-                    $(targetId+"-save-btn").hide();
+                    $(targetId+"-edit-icons").show();
+                    $(targetId+"-delete-icons").show();
+                    $(targetId+"-cancel-icons").hide();
+                    $(targetId+"-save-icons").hide();
 
                 }else if(showTrue==2){
                     // mode 'edit'
-                    $(targetId+"-edit-btn").hide();
-                    $(targetId+"-delete-btn").hide();
-                    $(targetId+"-cancel-btn").show();
-                    $(targetId+"-save-btn").show();
+                    $(targetId+"-edit-icons").hide();
+                    $(targetId+"-delete-icons").hide();
+                    $(targetId+"-cancel-icons").show();
+                    $(targetId+"-save-icons").show();
 
                 }else if(showTrue==3){
                     // mode 'add new'
-                    $(targetId+"-edit-btn").hide();
-                    $(targetId+"-delete-btn").hide();
-                    $(targetId+"-cancel-btn").hide();
-                    $(targetId+"-save-btn").hide();
+                    $(targetId+"-edit-icons").hide();
+                    $(targetId+"-delete-icons").hide();
+                    $(targetId+"-cancel-icons").hide();
+                    $(targetId+"-save-icons").hide();
                 }
 
                 return true;
             }
 
+            function targetInputSwitch(targetId, showTrue) {
+                if(showTrue==1) {
+                    // show "label"
+                    $(targetId+"-key-label").show();
+                    $(targetId+"-key-input").hide();
+                    $(targetId+"-val-label").show();
+                    $(targetId+"-val-input").hide();
 
-            /*
-            $(document).on("click", ".sort-item-group", function () {
-                var targetId = "#"+$(this)[0]['id'];
-            });
-             */
+                } else if (showTrue==2){
+                    // show "input"
+                    $(targetId+"-key-label").hide();
+                    $(targetId+"-key-input").show();
+                    $(targetId+"-val-label").hide();
+                    $(targetId+"-val-input").show();
+                }
+
+                return true;
+            }
+                /*
+                $(document).on("click", ".sort-item-group", function () {
+                    var targetId = "#"+$(this)[0]['id'];
+                });
+                 */
             // sort-item-group
 
         })(jQuery);
