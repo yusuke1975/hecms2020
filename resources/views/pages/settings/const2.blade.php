@@ -86,14 +86,14 @@
                                 </a>
                                 <a class="" data-toggle="modal">
                                     <i id="{{ $card_name }}-row-{{ $card_row_cnt }}-cancel-btn"
-                                       class="btn material-icons p-0 text-danger"
+                                       class="btn material-icons p-0 cancel-item text-danger"
                                        style="display: none;">
                                         cancel
                                     </i>
                                 </a>
                                 <a class="" data-toggle="modal">
-                                    <i id="{{ $card_name }}-{{ $card_row_cnt }}-save-btn"
-                                       class="btn material-icons p-0 text-success"
+                                    <i id="{{ $card_name }}-row-{{ $card_row_cnt }}-save-btn"
+                                       class="btn material-icons p-0 save-item text-success"
                                        style="display: none;">
                                         check_circle
                                     </i>
@@ -148,9 +148,66 @@
             });
 
             /* ################################
+            行の編集
+            ################################ */
+            $(document).on("click", ".edit-item", function () {
+                var targetId = "#"+$(this)[0]['id'].replace("-edit-btn", "");
+                rowIconSwitch(targetId, 2);
+            });
+
+            /* ################################
+            行の編集 キャンセル
+            ################################ */
+            $(document).on("click", ".cancel-item", function () {
+                var targetId = "#"+$(this)[0]['id'].replace("-cancel-btn", "");
+                rowIconSwitch(targetId, 1);
+
+            });
+
+            /* ################################
+            行の編集 保存
+            ################################ */
+            $(document).on("click", ".save-item", function () {
+                var targetId = "#"+$(this)[0]['id'].replace("-save-btn", "");
+                rowIconSwitch(targetId, 1);
+
+            });
+
+            /* ################################
             項目の移動設定
             ################################ */
             $('.{{ $plugin_name }}-rows').sortable();
+
+            /* ################################
+            custom functions
+            ################################ */
+            function rowIconSwitch(targetId, showTrue){
+
+                if(showTrue==1){
+                    // mode 'default'
+                    $(targetId+"-edit-btn").show();
+                    $(targetId+"-delete-btn").show();
+                    $(targetId+"-cancel-btn").hide();
+                    $(targetId+"-save-btn").hide();
+
+                }else if(showTrue==2){
+                    // mode 'edit'
+                    $(targetId+"-edit-btn").hide();
+                    $(targetId+"-delete-btn").hide();
+                    $(targetId+"-cancel-btn").show();
+                    $(targetId+"-save-btn").show();
+
+                }else if(showTrue==3){
+                    // mode 'add new'
+                    $(targetId+"-edit-btn").hide();
+                    $(targetId+"-delete-btn").hide();
+                    $(targetId+"-cancel-btn").hide();
+                    $(targetId+"-save-btn").hide();
+                }
+
+                return true;
+            }
+
 
             /*
             $(document).on("click", ".sort-item-group", function () {
