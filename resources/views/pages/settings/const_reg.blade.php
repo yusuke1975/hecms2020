@@ -6,132 +6,376 @@
 @endsection
 
 @section('content')
-<div id="page-settings-const">
-    <div id="accordion" class="accordion" role="tablist" aria-multiselectable="true">
+    <div class="animated fadeIn">
+        <div class="row">
 
-<?php
-        $ary_env = array(
-            "aaa" => array(
-                "key-aa1-a" =>array("val"=>"val-aa1-a"),
-                "key-aa2-a" => array("val"=>"val-aa2-a"),
-                "key-aa3-a" => array("val"=>"val-aa3-a"),
-            ),
-            "bbb" => array(
-                "key-bb1-a" => array("val"=>"val-bb1-b"),
-                "key-bb2-a" => array("val"=>"val-bb2-b"),
-                "key-bb3-a" => array("val"=>"val-bb3-b"),
-            ),
-            "ccc" => array(
-                "key-cc1-a" => array("val"=>"val-cc1-c"),
-            ),
-        );
-?>
-    <?php
-        $plugin_name = "forms-type-a";
-        $card_cnt = 1;
-        $show_first = " show";
-        ?>
-    @foreach($ary_env as $card_key_name => $card_ary)
-        <?php
-            $card_name = $plugin_name."-".$card_key_name;
-        ?>
-        {{-- card --}}
-        <div id="{{ $card_name }}" class="card {{ $plugin_name }}-card">
-            {{-- card header --}}
-            <div id="{{ $card_name }}-header" class="{{ $plugin_name }}-card-header card-header" role="tab">
-                <h5 class="mb-0">
-                    <a class="text-body d-block p-3 m-n3" data-toggle="collapse"
-                       href="#{{ $card_name }}-body" role="button" aria-expanded="false"
-                       aria-controls="{{ $card_name }}-body">
-                        {{ $card_key_name }}
-                    </a>
-                </h5>
-            </div>{{-- card header --}}
-            {{-- card body --}}
-            <div id="{{ $card_name }}-body" class="collapse {{ $plugin_name }}-body{{ $show_first }}" role="tabpanel"
-                 aria-labelledby="{{ $card_name }}-header" data-parent="#accordion">
-                {{-- card rows --}}
-                <ul id="{{ $card_name }}-rows" class="card-body {{ $plugin_name }}-rows">
-
-                    <?php $card_row_cnt = 1; ?>
-                    {{-- card row --}}
-                    @foreach($card_ary as $card_row_key => $card_row_ary)
-                        <?php $card_row_val = $card_row_ary['val'] ?>
-                        <li id="{{ $card_name }}-row-{{ $card_row_cnt }}" class="row {{ $plugin_name }}-row">
-                            <span class="col-md-1 form-group">
-                                <i class="material-icons p-0 move-icon">
-                                    reorder
-                                </i>
-                            </span>
-                            <div class="col-md-3 form-group">
-                                {{-- label --}}
-                                <span id="{{ $card_name }}-row-{{ $card_row_cnt }}-key-label">{{ $card_row_key }}</span>
-                                <input id="{{ $card_name }}-row-{{ $card_row_cnt }}-key-input"
-                                       type="text" placeholder="value"
-                                       class="form-control" value="{{ $card_row_key }}"
-                                       style="display: none;">
-                            </div>
-                            <div class="col-md-7 form-group">
-                                <span id="{{ $card_name }}-row-{{ $card_row_cnt }}-val-label">{{ $card_row_val }}</span>
-                                <input id="{{ $card_name }}-row-{{ $card_row_cnt }}-val-input"
-                                        type="text" placeholder="value"
-                                        class="form-control" value="{{ $card_row_val }}"
-                                        style="display: none;">
-                            </div>
-                            <span class="col-md-1 form-group">
-                                <a class="" data-toggle="modal">
-                                    <i id="{{ $card_name }}-row-{{ $card_row_cnt }}-delete-icon"
-                                       class="btn material-icons p-0 delete-icons {{ $card_name }}-delete-icons"
-                                       row="{{ $card_row_cnt }}"
-                                    >remove_circle</i>
-                                </a>
-                                <a class="" data-toggle="modal">
-                                    <i id="{{ $card_name }}-row-{{ $card_row_cnt }}-edit-icon"
-                                       class="btn material-icons p-0 edit-icons {{ $card_name }}-edit-icons"
-                                    >create</i>
-                                </a>
-                                <a class="" data-toggle="modal">
-                                    <i id="{{ $card_name }}-row-{{ $card_row_cnt }}-cancel-icon"
-                                       class="btn material-icons p-0 cancel-icons {{ $card_name }}-cancel-icons text-danger"
-                                       style="display: none;">
-                                        cancel
-                                    </i>
-                                </a>
-                                <a class="" data-toggle="modal">
-                                    <i id="{{ $card_name }}-row-{{ $card_row_cnt }}-save-icon"
-                                       class="btn material-icons p-0 save-icons {{ $card_name }}-save-icons text-success"
-                                       style="display: none;">
-                                        check_circle
-                                    </i>
-                                </a>
-                            </span>
-                        </li>{{-- end row --}}
-                        <?php $card_row_cnt++; ?>
-                    @endforeach
-                </ul> {{-- end card rows --}}
-                {{-- add new area --}}
-                <div id="{{ $card_name }}-addnew" class="row {{ $plugin_name }}-addnew" rowtype="newItem">
-                    <div class="col-md-2 form-group text-right">
-
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <strong class="card-title">Data Table</strong>
                     </div>
-                    <span class="col-md-10 form-group">
-                        <button id="{{ $card_name }}-addnew-btn" name="{{ $card_key_name }}"
-                                class="btn btn-info {{ $plugin_name }}-addnew-btn"
-                                data-toggle="modal">
-                            <i class="material-icons {{ $plugin_name }}-addnew-icon">add_circle</i>
-                            <span class="">New</span>
-                        </button>
-                    </span>
-                </div>{{-- end add new --}}
-            </div>{{-- end card body --}}
-        </div>{{-- end card --}}
-        <?php
-            $show_first = "";
-            ?>
-    @endforeach
+                    <div class="card-body">
+                        <table id="bootstrap-data-table-export" class="table table-striped table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Office</th>
+                                <th>Salary</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Tiger Nixon</td>
+                                <td>System Architect</td>
+                                <td>Edinburgh</td>
+                                <td>$320,800</td>
+                            </tr>
+                            <tr>
+                                <td>Garrett Winters</td>
+                                <td>Accountant</td>
+                                <td>Tokyo</td>
+                                <td>$170,750</td>
+                            </tr>
+                            <tr>
+                                <td>Ashton Cox</td>
+                                <td>Junior Technical Author</td>
+                                <td>San Francisco</td>
+                                <td>$86,000</td>
+                            </tr>
+                            <tr>
+                                <td>Cedric Kelly</td>
+                                <td>Senior Javascript Developer</td>
+                                <td>Edinburgh</td>
+                                <td>$433,060</td>
+                            </tr>
+                            <tr>
+                                <td>Airi Satou</td>
+                                <td>Accountant</td>
+                                <td>Tokyo</td>
+                                <td>$162,700</td>
+                            </tr>
+                            <tr>
+                                <td>Brielle Williamson</td>
+                                <td>Integration Specialist</td>
+                                <td>New York</td>
+                                <td>$372,000</td>
+                            </tr>
+                            <tr>
+                                <td>Herrod Chandler</td>
+                                <td>Sales Assistant</td>
+                                <td>San Francisco</td>
+                                <td>$137,500</td>
+                            </tr>
+                            <tr>
+                                <td>Rhona Davidson</td>
+                                <td>Integration Specialist</td>
+                                <td>Tokyo</td>
+                                <td>$327,900</td>
+                            </tr>
+                            <tr>
+                                <td>Colleen Hurst</td>
+                                <td>Javascript Developer</td>
+                                <td>San Francisco</td>
+                                <td>$205,500</td>
+                            </tr>
+                            <tr>
+                                <td>Sonya Frost</td>
+                                <td>Software Engineer</td>
+                                <td>Edinburgh</td>
+                                <td>$103,600</td>
+                            </tr>
+                            <tr>
+                                <td>Jena Gaines</td>
+                                <td>Office Manager</td>
+                                <td>London</td>
+                                <td>$90,560</td>
+                            </tr>
+                            <tr>
+                                <td>Quinn Flynn</td>
+                                <td>Support Lead</td>
+                                <td>Edinburgh</td>
+                                <td>$342,000</td>
+                            </tr>
+                            <tr>
+                                <td>Charde Marshall</td>
+                                <td>Regional Director</td>
+                                <td>San Francisco</td>
+                                <td>$470,600</td>
+                            </tr>
+                            <tr>
+                                <td>Haley Kennedy</td>
+                                <td>Senior Marketing Designer</td>
+                                <td>London</td>
+                                <td>$313,500</td>
+                            </tr>
+                            <tr>
+                                <td>Tatyana Fitzpatrick</td>
+                                <td>Regional Director</td>
+                                <td>London</td>
+                                <td>$385,750</td>
+                            </tr>
+                            <tr>
+                                <td>Michael Silva</td>
+                                <td>Marketing Designer</td>
+                                <td>London</td>
+                                <td>$198,500</td>
+                            </tr>
+                            <tr>
+                                <td>Paul Byrd</td>
+                                <td>Chief Financial Officer (CFO)</td>
+                                <td>New York</td>
+                                <td>$725,000</td>
+                            </tr>
+                            <tr>
+                                <td>Gloria Little</td>
+                                <td>Systems Administrator</td>
+                                <td>New York</td>
+                                <td>$237,500</td>
+                            </tr>
+                            <tr>
+                                <td>Bradley Greer</td>
+                                <td>Software Engineer</td>
+                                <td>London</td>
+                                <td>$132,000</td>
+                            </tr>
+                            <tr>
+                                <td>Dai Rios</td>
+                                <td>Personnel Lead</td>
+                                <td>Edinburgh</td>
+                                <td>$217,500</td>
+                            </tr>
+                            <tr>
+                                <td>Jenette Caldwell</td>
+                                <td>Development Lead</td>
+                                <td>New York</td>
+                                <td>$345,000</td>
+                            </tr>
+                            <tr>
+                                <td>Yuri Berry</td>
+                                <td>Chief Marketing Officer (CMO)</td>
+                                <td>New York</td>
+                                <td>$675,000</td>
+                            </tr>
+                            <tr>
+                                <td>Caesar Vance</td>
+                                <td>Pre-Sales Support</td>
+                                <td>New York</td>
+                                <td>$106,450</td>
+                            </tr>
+                            <tr>
+                                <td>Doris Wilder</td>
+                                <td>Sales Assistant</td>
+                                <td>Sidney</td>
+                                <td>$85,600</td>
+                            </tr>
+                            <tr>
+                                <td>Angelica Ramos</td>
+                                <td>Chief Executive Officer (CEO)</td>
+                                <td>London</td>
+                                <td>$1,200,000</td>
+                            </tr>
+                            <tr>
+                                <td>Gavin Joyce</td>
+                                <td>Developer</td>
+                                <td>Edinburgh</td>
+                                <td>$92,575</td>
+                            </tr>
+                            <tr>
+                                <td>Jennifer Chang</td>
+                                <td>Regional Director</td>
+                                <td>Singapore</td>
+                                <td>$357,650</td>
+                            </tr>
+                            <tr>
+                                <td>Brenden Wagner</td>
+                                <td>Software Engineer</td>
+                                <td>San Francisco</td>
+                                <td>$206,850</td>
+                            </tr>
+                            <tr>
+                                <td>Fiona Green</td>
+                                <td>Chief Operating Officer (COO)</td>
+                                <td>San Francisco</td>
+                                <td>$850,000</td>
+                            </tr>
+                            <tr>
+                                <td>Shou Itou</td>
+                                <td>Regional Marketing</td>
+                                <td>Tokyo</td>
+                                <td>$163,000</td>
+                            </tr>
+                            <tr>
+                                <td>Michelle House</td>
+                                <td>Integration Specialist</td>
+                                <td>Sidney</td>
+                                <td>$95,400</td>
+                            </tr>
+                            <tr>
+                                <td>Suki Burks</td>
+                                <td>Developer</td>
+                                <td>London</td>
+                                <td>$114,500</td>
+                            </tr>
+                            <tr>
+                                <td>Prescott Bartlett</td>
+                                <td>Technical Author</td>
+                                <td>London</td>
+                                <td>$145,000</td>
+                            </tr>
+                            <tr>
+                                <td>Gavin Cortez</td>
+                                <td>Team Leader</td>
+                                <td>San Francisco</td>
+                                <td>$235,500</td>
+                            </tr>
+                            <tr>
+                                <td>Martena Mccray</td>
+                                <td>Post-Sales support</td>
+                                <td>Edinburgh</td>
+                                <td>$324,050</td>
+                            </tr>
+                            <tr>
+                                <td>Unity Butler</td>
+                                <td>Marketing Designer</td>
+                                <td>San Francisco</td>
+                                <td>$85,675</td>
+                            </tr>
+                            <tr>
+                                <td>Howard Hatfield</td>
+                                <td>Office Manager</td>
+                                <td>San Francisco</td>
+                                <td>$164,500</td>
+                            </tr>
+                            <tr>
+                                <td>Hope Fuentes</td>
+                                <td>Secretary</td>
+                                <td>San Francisco</td>
+                                <td>$109,850</td>
+                            </tr>
+                            <tr>
+                                <td>Vivian Harrell</td>
+                                <td>Financial Controller</td>
+                                <td>San Francisco</td>
+                                <td>$452,500</td>
+                            </tr>
+                            <tr>
+                                <td>Timothy Mooney</td>
+                                <td>Office Manager</td>
+                                <td>London</td>
+                                <td>$136,200</td>
+                            </tr>
+                            <tr>
+                                <td>Jackson Bradshaw</td>
+                                <td>Director</td>
+                                <td>New York</td>
+                                <td>$645,750</td>
+                            </tr>
+                            <tr>
+                                <td>Olivia Liang</td>
+                                <td>Support Engineer</td>
+                                <td>Singapore</td>
+                                <td>$234,500</td>
+                            </tr>
+                            <tr>
+                                <td>Bruno Nash</td>
+                                <td>Software Engineer</td>
+                                <td>London</td>
+                                <td>$163,500</td>
+                            </tr>
+                            <tr>
+                                <td>Sakura Yamamoto</td>
+                                <td>Support Engineer</td>
+                                <td>Tokyo</td>
+                                <td>$139,575</td>
+                            </tr>
+                            <tr>
+                                <td>Thor Walton</td>
+                                <td>Developer</td>
+                                <td>New York</td>
+                                <td>$98,540</td>
+                            </tr>
+                            <tr>
+                                <td>Finn Camacho</td>
+                                <td>Support Engineer</td>
+                                <td>San Francisco</td>
+                                <td>$87,500</td>
+                            </tr>
+                            <tr>
+                                <td>Serge Baldwin</td>
+                                <td>Data Coordinator</td>
+                                <td>Singapore</td>
+                                <td>$138,575</td>
+                            </tr>
+                            <tr>
+                                <td>Zenaida Frank</td>
+                                <td>Software Engineer</td>
+                                <td>New York</td>
+                                <td>$125,250</td>
+                            </tr>
+                            <tr>
+                                <td>Zorita Serrano</td>
+                                <td>Software Engineer</td>
+                                <td>San Francisco</td>
+                                <td>$115,000</td>
+                            </tr>
+                            <tr>
+                                <td>Jennifer Acosta</td>
+                                <td>Junior Javascript Developer</td>
+                                <td>Edinburgh</td>
+                                <td>$75,650</td>
+                            </tr>
+                            <tr>
+                                <td>Cara Stevens</td>
+                                <td>Sales Assistant</td>
+                                <td>New York</td>
+                                <td>$145,600</td>
+                            </tr>
+                            <tr>
+                                <td>Hermione Butler</td>
+                                <td>Regional Director</td>
+                                <td>London</td>
+                                <td>$356,250</td>
+                            </tr>
+                            <tr>
+                                <td>Lael Greer</td>
+                                <td>Systems Administrator</td>
+                                <td>London</td>
+                                <td>$103,500</td>
+                            </tr>
+                            <tr>
+                                <td>Jonas Alexander</td>
+                                <td>Developer</td>
+                                <td>San Francisco</td>
+                                <td>$86,500</td>
+                            </tr>
+                            <tr>
+                                <td>Shad Decker</td>
+                                <td>Regional Director</td>
+                                <td>Edinburgh</td>
+                                <td>$183,000</td>
+                            </tr>
+                            <tr>
+                                <td>Michael Bruce</td>
+                                <td>Javascript Developer</td>
+                                <td>Singapore</td>
+                                <td>$183,000</td>
+                            </tr>
+                            <tr>
+                                <td>Donna Snider</td>
+                                <td>Customer Support</td>
+                                <td>New York</td>
+                                <td>$112,000</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 
-   </div><!-- /#accordion -->
-</div>
+
+        </div>
+    </div><!-- .animated -->
 @endsection{{-- content --}}
 
 
