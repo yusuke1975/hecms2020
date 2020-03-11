@@ -2,13 +2,193 @@
 @include('plugin.editformmulticard')
 
 @section('page-head')
+
+    <link rel="stylesheet" href="{{ asset('assets/css/page_settings_constreg.css.php') }}">
+{{--
+    <link rel="stylesheet" href="{{ asset('vendors/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendors/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/page_settings_const2.css.php') }}">
+--}}
+
+@endsection
+
+@section('page-foot')
+
+    <script src="{{ asset('assets/js/page_settings_constreg.js') }}"></script>
+{{--
+    <script src="{{ asset('vendors/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('vendors/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('vendors/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('vendors/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('vendors/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('vendors/datatables.net-buttons/js/buttons.colVis.min.js') }}"></script>
+    <script src="{{ asset('assets/js/init-scripts/data-table/datatables-init.js') }}"></script>
+--}}
+    <script>
+        (function($) {
+
+        })(jQuery);
+    </script>
+
 @endsection
 
 @section('content')
+<?php
+    $ary_data = array(
+        array(
+            'person_name' => 'aaa',
+            'age' => '10',
+            'company_name' => 'aaa-com',
+            'countory' => 'japan',
+            'city' => 'tokyo',
+        ),
+        array(
+            'person_name' => 'bbb',
+            'age' => '11',
+            'company_name' => 'bbb.com',
+            'countory' => 'vietnam',
+            'city' => 'hanoi',
+        ),
+    );
+?>
     <div class="animated fadeIn">
         <div class="row">
 
+            <div class="col-lg-12">
+                <!-- Editable table -->
+                <div class="card">
+                    <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Editable table</h3>
+                    <div class="card-body">
+                        <div id="table" class="table-editable">
+                            <span class="table-add float-right mb-3 mr-2">
+                                <a href="#!" class="text-success">
+                                    <i class="material-icons">add_circle</i>
+                                </a>
+                            </span>
+                            <table class="table table-bordered table-responsive-md table-striped text-center">
+                                <thead>
+                                <tr>
+                                    <th class="text-center">Person Name</th>
+                                    <th class="text-center">Age</th>
+                                    <th class="text-center">Company Name</th>
+                                    <th class="text-center">Country</th>
+                                    <th class="text-center">City</th>
+                                    <th class="text-center">Sort</th>
+                                    <th class="text-center">Remove</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($ary_data as $card_ary)
+                                    <tr>
+                                        <td class="pt-3-half" contenteditable="true">{{ $card_ary['person_name'] }}</td>
+                                        <td class="pt-3-half" contenteditable="true">{{ $card_ary['age'] }}</td>
+                                        <td class="pt-3-half" contenteditable="true">{{ $card_ary['company_name'] }}</td>
+                                        <td class="pt-3-half" contenteditable="true">{{ $card_ary['countory'] }}</td>
+                                        <td class="pt-3-half" contenteditable="true">{{ $card_ary['city'] }}</td>
+                                        <td class="pt-3-half">
+                                        <span class="table-up">
+                                            <a href="#!" class="indigo-text">
+                                                {{--
+                                                <i class="fas fa-long-arrow-alt-up" aria-hidden="true"></i>
+                                                --}}
+                                                <i class="material-icons" aria-hidden="true">arrow_upward</i>
+                                            </a>
+                                        </span>
+                                            <span class="table-down">
+                                            <a href="#!" class="indigo-text">
+                                                <i class="material-icons" aria-hidden="true">arrow_downward</i>
+                                            </a>
+                                        </span>
+                                        </td>
+                                        <td>
+              <span class="table-remove"><button type="button"
+                                                 class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                <!-- This is our clonable table line -->
+{{--
+                                <tr>
+                                    <td class="pt-3-half" contenteditable="true">Guerra Cortez</td>
+                                    <td class="pt-3-half" contenteditable="true">45</td>
+                                    <td class="pt-3-half" contenteditable="true">Insectus</td>
+                                    <td class="pt-3-half" contenteditable="true">USA</td>
+                                    <td class="pt-3-half" contenteditable="true">San Francisco</td>
+                                    <td class="pt-3-half">
+                                        <span class="table-up">
+                                            <a href="#!" class="indigo-text">
+                                                <i class="material-icons" aria-hidden="true">arrow_upward</i>
+                                            </a>
+                                        </span>
+                                        <span class="table-down">
+                                            <a href="#!" class="indigo-text">
+                                                <i class="material-icons" aria-hidden="true">arrow_downward</i>
+                                            </a>
+                                        </span>
+                                    </td>
+                                    <td>
+              <span class="table-remove"><button type="button"
+                                                 class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
+                                    </td>
+                                </tr>
+                                <!-- This is our clonable table line -->
+                                <tr>
+                                    <td class="pt-3-half" contenteditable="true">Guadalupe House</td>
+                                    <td class="pt-3-half" contenteditable="true">26</td>
+                                    <td class="pt-3-half" contenteditable="true">Isotronic</td>
+                                    <td class="pt-3-half" contenteditable="true">Germany</td>
+                                    <td class="pt-3-half" contenteditable="true">Frankfurt am Main</td>
+                                    <td class="pt-3-half">
+                                        <span class="table-up">
+                                            <a href="#!" class="indigo-text">
+                                                <i class="material-icons" aria-hidden="true">arrow_upward</i>
+                                            </a>
+                                        </span>
+                                        <span class="table-down">
+                                            <a href="#!" class="indigo-text">
+                                                <i class="material-icons" aria-hidden="true">arrow_downward</i>
+                                            </a>
+                                        </span>
+                                    </td>
+                                    <td>
+              <span class="table-remove"><button type="button"
+                                                 class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
+                                    </td>
+                                </tr>
+                                <!-- This is our clonable table line -->
+                                <tr class="hide">
+                                    <td class="pt-3-half" contenteditable="true">Elisa Gallagher</td>
+                                    <td class="pt-3-half" contenteditable="true">31</td>
+                                    <td class="pt-3-half" contenteditable="true">Portica</td>
+                                    <td class="pt-3-half" contenteditable="true">United Kingdom</td>
+                                    <td class="pt-3-half" contenteditable="true">London</td>
+                                    <td class="pt-3-half">
+                                        <span class="table-up">
+                                            <a href="#!" class="indigo-text">
+                                                <i class="material-icons" aria-hidden="true">arrow_upward</i>
+                                            </a>
+                                        </span>
+                                        <span class="table-down">
+                                            <a href="#!" class="indigo-text">
+                                                <i class="material-icons" aria-hidden="true">arrow_downward</i>
+                                            </a>
+                                        </span>
+                                    </td>
+                                    <td>
+              <span class="table-remove"><button type="button"
+                                                 class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
+                                    </td>
+                                </tr>
+--}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Editable table -->
+            </div>
+
+{{--
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
@@ -372,153 +552,9 @@
                     </div>
                 </div>
             </div>
-
+--}}
 
         </div>
     </div><!-- .animated -->
 @endsection{{-- content --}}
-
-
-@section('page-foot')
-    {{--
-        <script src="{{ asset('assets/js/page_settings_const.js') }}"></script>
-    --}}
-    <script>
-        (function($) {
-
-            /* ################################
-            行の削除
-            ################################ */
-            $(document).on("click", ".delete-icons", function () {
-                $("#"+$(this)[0]['id'].replace("-delete-btn", "")).remove();
-                /*
-                var targetIdObj = $("#"+$(this)[0]['id'].replace("-delete-btn", ""));
-                $(targetIdObj).remove();
-                */
-            });
-
-            /* ################################
-            行の編集
-            ################################ */
-            $(document).on("click", ".edit-icons", function () {
-                var targetId = $(this)[0]['id'].replace("-edit-icon", "");
-                var targetClass = targetId.substr(0, targetId.indexOf('-row'));
-
-                console.log("targetClass : ["+targetClass+"]");
-                console.log("targetId : ["+targetId+"]");
-
-                $("."+targetClass+"-delete-icons").hide();
-                $("."+targetClass+"-edit-icons").hide();
-                $("#"+targetClass+"-addnew-btn").hide();
-
-                rowIconSwitch("#"+targetId, 2);
-                targetInputSwitch("#"+targetId, 2);
-
-                // ソートの停止
-                $('.{{ $plugin_name }}-rows').sortable({ disabled:true });
-            });
-
-            /* ################################
-            行の編集 キャンセル
-            ################################ */
-            $(document).on("click", ".cancel-icons", function () {
-                var targetId = $(this)[0]['id'].replace("-cancel-icon", "");
-                var targetClass = targetId.substr(0, targetId.indexOf('-row'));
-
-                $("."+targetClass+"-delete-icons").show();
-                $("."+targetClass+"-edit-icons").show();
-                $("#"+targetClass+"-addnew-btn").show();
-
-                rowIconSwitch("#"+targetId, 1);
-                targetInputSwitch("#"+targetId, 1);
-
-                // ソートの再開
-                $('.{{ $plugin_name }}-rows').sortable({ disabled:false });
-            });
-
-            /* ################################
-            行の編集 保存
-            ################################ */
-            $(document).on("click", ".save-icons", function () {
-                var targetId = $(this)[0]['id'].replace("-save-icon", "");
-                var targetClass = targetId.substr(0, targetId.indexOf('-row'));
-
-                $("."+targetClass+"-delete-icons").show();
-                $("."+targetClass+"-edit-icons").show();
-                $("#"+targetClass+"-addnew-btn").show();
-
-                rowIconSwitch("#"+targetId, 1);
-                targetInputSwitch("#"+targetId, 1);
-
-                // ソートの再開
-                $('.{{ $plugin_name }}-rows').sortable({ disabled:false });
-            });
-
-            /* ################################
-            項目の移動設定
-            ################################ */
-            $('.{{ $plugin_name }}-rows').sortable();
-
-            /* ################################
-            custom functions
-            ################################ */
-            function rowIconSwitch(targetId, showTrue){
-                console.log("rowIconSwitch : "+targetId);
-                if(showTrue==1){
-                    // mode 'default'
-                    $(targetId+"-edit-icons").show();
-                    $(targetId+"-delete-icons").show();
-                    $(targetId+"-cancel-icon").hide();
-                    $(targetId+"-save-icon").hide();
-
-                }else if(showTrue==2){
-                    // mode 'edit'
-                    $(targetId+"-edit-icons").hide();
-                    $(targetId+"-delete-icons").hide();
-                    $(targetId+"-cancel-icon").show();
-                    $(targetId+"-save-icon").show();
-
-                }else if(showTrue==3){
-                    // mode 'add new'
-                    $(targetId+"-edit-icons").hide();
-                    $(targetId+"-delete-icons").hide();
-                    $(targetId+"-cancel-icons").hide();
-                    $(targetId+"-save-icons").hide();
-                }
-
-                return true;
-            }
-
-            function targetInputSwitch(targetId, showTrue) {
-                console.log("targetInputSwitch : "+targetId);
-
-                if(showTrue==1) {
-                    // show "label"
-                    $(targetId+"-key-label").show();
-                    $(targetId+"-key-input").hide();
-                    $(targetId+"-val-label").show();
-                    $(targetId+"-val-input").hide();
-
-                } else if (showTrue==2){
-                    // show "input"
-                    $(targetId+"-key-label").hide();
-                    $(targetId+"-key-input").show();
-                    $(targetId+"-val-label").hide();
-                    $(targetId+"-val-input").show();
-                }
-
-                return true;
-            }
-                /*
-                $(document).on("click", ".sort-item-group", function () {
-                    var targetId = "#"+$(this)[0]['id'];
-                });
-                 */
-            // sort-item-group
-
-        })(jQuery);
-
-    </script>
-
-@endsection
 

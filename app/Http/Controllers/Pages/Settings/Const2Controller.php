@@ -59,7 +59,7 @@ class Const2Controller extends Controller
                 }
                 $tmp_cnt++;
             }
-            return view('pages.settings.const_reg', compact('page_name', 'breadcrumbs', 'ary_env'));
+            return view('pages.settings.constreg', compact('page_name', 'breadcrumbs', 'ary_env'));
 
         }
 
