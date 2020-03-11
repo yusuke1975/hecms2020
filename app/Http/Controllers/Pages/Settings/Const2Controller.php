@@ -51,11 +51,14 @@ class Const2Controller extends Controller
             foreach ($ary_env_tmp as $val){
                 if(strlen($val) > 0 && substr($val, 0, 1) !== "#"){
                     $strcnt = strpos( $val, "=");
+                    $ary_env[$const_env][substr($val, 0, $strcnt)] = substr($val, $strcnt + 1);
+/*
                     if($tmp_cnt > 10){
                         $ary_env[$const_env.round($tmp_cnt/10)][substr($val, 0, $strcnt)] = substr($val, $strcnt + 1);
                     }else {
                         $ary_env[$const_env][substr($val, 0, $strcnt)] = substr($val, $strcnt + 1);
                     }
+*/
                 }
                 $tmp_cnt++;
             }

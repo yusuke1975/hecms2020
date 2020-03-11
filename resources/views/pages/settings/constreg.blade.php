@@ -50,6 +50,11 @@
             'city' => 'hanoi',
         ),
     );
+/*
+echo "<pre>";
+print_r($ary_env);
+echo "</pre>";
+*/
 ?>
     <div class="animated fadeIn">
         <div class="row">
@@ -57,7 +62,7 @@
             <div class="col-lg-12">
                 <!-- Editable table -->
                 <div class="card">
-                    <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Editable table</h3>
+                    <h3 class="card-header text-center font-weight-bold text-uppercase py-4">env const list</h3>
                     <div class="card-body">
                         <div id="table" class="table-editable">
                             <span class="table-add float-right mb-3 mr-2">
@@ -67,42 +72,42 @@
                             </span>
                             <table class="table table-bordered table-responsive-md table-striped text-center">
                                 <thead>
-                                <tr>
-                                    <th class="text-center">Person Name</th>
-                                    <th class="text-center">Age</th>
-                                    <th class="text-center">Company Name</th>
-                                    <th class="text-center">Country</th>
-                                    <th class="text-center">City</th>
-                                    <th class="text-center">Sort</th>
-                                    <th class="text-center">Remove</th>
+                                <tr class="row">
+                                    <th class="col-md-2 text-center">Person Name</th>
+                                    <th class="col-md-1 text-center">Age</th>
+                                    <th class="col-md-3 text-center">Company Name</th>
+                                    <th class="col-md-2 text-center">Country</th>
+                                    <th class="col-md-2 text-center">City</th>
+                                    <th class="col-md-1 text-center">Sort</th>
+                                    <th class="col-md-1 text-center">Remove</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($ary_data as $card_ary)
-                                    <tr>
-                                        <td class="pt-3-half" contenteditable="true">{{ $card_ary['person_name'] }}</td>
-                                        <td class="pt-3-half" contenteditable="true">{{ $card_ary['age'] }}</td>
-                                        <td class="pt-3-half" contenteditable="true">{{ $card_ary['company_name'] }}</td>
-                                        <td class="pt-3-half" contenteditable="true">{{ $card_ary['countory'] }}</td>
-                                        <td class="pt-3-half" contenteditable="true">{{ $card_ary['city'] }}</td>
-                                        <td class="pt-3-half">
-                                        <span class="table-up">
-                                            <a href="#!" class="indigo-text">
-                                                {{--
-                                                <i class="fas fa-long-arrow-alt-up" aria-hidden="true"></i>
-                                                --}}
-                                                <i class="material-icons" aria-hidden="true">arrow_upward</i>
-                                            </a>
-                                        </span>
+                                    <tr class="row">
+                                        <td class="col-md-2 pt-3-half" contenteditable="true">{{ $card_ary['person_name'] }}</td>
+                                        <td class="col-md-1 pt-3-half" contenteditable="true">{{ $card_ary['age'] }}</td>
+                                        <td class="col-md-3 pt-3-half" contenteditable="true">{{ $card_ary['company_name'] }}</td>
+                                        <td class="col-md-2 pt-3-half" contenteditable="true">{{ $card_ary['countory'] }}</td>
+                                        <td class="col-md-2 pt-3-half" contenteditable="true">{{ $card_ary['city'] }}</td>
+                                        <td class="col-md-1 pt-3-half">
+                                            <span class="table-up">
+                                                <a href="#!" class="indigo-text">
+                                                    <i class="material-icons" aria-hidden="true">arrow_upward</i>
+                                                </a>
+                                            </span>
                                             <span class="table-down">
                                             <a href="#!" class="indigo-text">
                                                 <i class="material-icons" aria-hidden="true">arrow_downward</i>
                                             </a>
                                         </span>
                                         </td>
-                                        <td>
-              <span class="table-remove"><button type="button"
-                                                 class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
+                                        <td class="col-md-1">
+                                            <span class="table-remove">
+                                                <button type="button" class="btn btn-danger rounded-circle btn-sm my-0">
+                                                    <i class="material-icons">delete_forever</i>
+                                                </button>
+                                            </span>
                                         </td>
                                     </tr>
                                 @endforeach

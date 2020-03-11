@@ -5,31 +5,44 @@
     const $EXPORT = $('#export');
 
 const newTr = `
-<tr class="hide">
-  <td class="pt-3-half" contenteditable="true">Example</td>
-  <td class="pt-3-half" contenteditable="true">Example</td>
-  <td class="pt-3-half" contenteditable="true">Example</td>
-  <td class="pt-3-half" contenteditable="true">Example</td>
-  <td class="pt-3-half" contenteditable="true">Example</td>
-  <td class="pt-3-half">
-    <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up" aria-hidden="true"></i></a></span>
-    <span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down" aria-hidden="true"></i></a></span>
-  </td>
-  <td>
-    <span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">Remove</button></span>
-  </td>
-</tr>`;
+<tr class="row">
+    <td class="col-md-2 pt-3-half" contenteditable="true"></td>
+    <td class="col-md-1 pt-3-half" contenteditable="true"></td>
+    <td class="col-md-3 pt-3-half" contenteditable="true"></td>
+    <td class="col-md-2 pt-3-half" contenteditable="true"></td>
+    <td class="col-md-2 pt-3-half" contenteditable="true"></td>
+    <td class="col-md-1 pt-3-half">
+        <span class="table-up">
+            <a href="#!" class="indigo-text">
+                <i class="material-icons" aria-hidden="true">arrow_upward</i>
+            </a>
+        </span>
+        <span class="table-down">
+        <a href="#!" class="indigo-text">
+            <i class="material-icons" aria-hidden="true">arrow_downward</i>
+        </a>
+    </span>
+    </td>
+    <td class="col-md-1">
+        <span class="table-remove">
+            <button type="button" class="btn btn-danger rounded-circle btn-sm my-0">
+                <i class="material-icons">delete_forever</i>
+            </button>
+        </span>
+    </td>
+</tr>
+`;
 
 $('.table-add').on('click', 'i', () => {
 
     const $clone = $tableID.find('tbody tr').last().clone(true).removeClass('hide table-line');
 
-    if ($tableID.find('tbody tr').length === 0) {
-
+    // コピーする場合はこの if を有効にする
+    //if ($tableID.find('tbody tr').length === 0) {
         $('tbody').append(newTr);
-    }
+    //}
 
-    $tableID.find('table').append($clone);
+    // $tableID.find('table').append($clone);
 });
 
 $tableID.on('click', '.table-remove', function () {
@@ -46,6 +59,7 @@ $tableID.on('click', '.table-up', function () {
     }
 
     $row.prev().before($row.get(0));
+
 });
 
 $tableID.on('click', '.table-down', function () {
