@@ -4,6 +4,7 @@
 @section('page-head')
 
     <link rel="stylesheet" href="{{ asset('assets/css/page_settings_constreg.css.php') }}">
+    <link rel="stylesheet" href="{{ asset('vendors/jquery-toggleswitch/css/tinytools.toggleswitch.css') }}">
 {{--
     <link rel="stylesheet" href="{{ asset('vendors/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendors/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}">
@@ -15,6 +16,7 @@
 @section('page-foot')
 
     <script src="{{ asset('assets/js/page_settings_constreg.js') }}"></script>
+    <script src="{{ asset('vendors/jquery-toggleswitch/tinytools.toggleswitch.min.js') }}"></script>
 {{--
     <script src="{{ asset('vendors/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('vendors/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
@@ -26,14 +28,30 @@
 --}}
     <script>
         (function($) {
+            $("#ToggleSwitchSample").toggleSwitch();
 
+            $(".cb-enable").click(function(){
+                var parent = $(this).parents('.switch');
+                $('.cb-disable',parent).removeClass('selected');
+                $(this).addClass('selected');
+                $('.checkbox',parent).attr('checked', true);
+            });
+
+            $(".cb-disable").click(function(){
+                var parent = $(this).parents('.switch');
+                $('.cb-enable',parent).removeClass('selected');
+                $(this).addClass('selected');
+                $('.checkbox',parent).attr('checked', false);
+            });
         })(jQuery);
     </script>
 
 @endsection
 
 @section('content')
-<?php
+
+
+    <?php
     $ary_data = array(
         array(
             'person_name' => 'aaa',
@@ -50,6 +68,7 @@
             'city' => 'hanoi',
         ),
     );
+
 /*
 echo "<pre>";
 print_r($ary_env);
@@ -73,24 +92,46 @@ echo "</pre>";
                             <table class="table table-bordered table-responsive-md table-striped text-center">
                                 <thead>
                                 <tr class="row">
-                                    <th class="col-md-2 text-center">Person Name</th>
-                                    <th class="col-md-1 text-center">Age</th>
+                                    <th class="col-md-3 text-center">key</th>
+                                    <th class="col-md-4 text-center">value</th>
+                                    <th class="col-md-1 text-center">edit</th>
+                                    <th class="col-md-2 text-center"></th>
+{{--
                                     <th class="col-md-3 text-center">Company Name</th>
                                     <th class="col-md-2 text-center">Country</th>
                                     <th class="col-md-2 text-center">City</th>
+--}}
                                     <th class="col-md-1 text-center">Sort</th>
                                     <th class="col-md-1 text-center">Remove</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($ary_data as $card_ary)
+                                @foreach($ary_env as $env_key => $aryval)
+                                    @foreach($aryval as $key => $val)
+
                                     <tr class="row">
-                                        <td class="col-md-2 pt-3-half" contenteditable="true">{{ $card_ary['person_name'] }}</td>
-                                        <td class="col-md-1 pt-3-half" contenteditable="true">{{ $card_ary['age'] }}</td>
+                                        <td class="col-md-3 pt-3-half key" contenteditable="true">{{ $key }}</td>
+                                        <td class="col-md-4 pt-3-half" contenteditable="true">
+                                            {{ $val }}
+                                        </td>
+                                        <td class="col-md-1 pt-3-half" contenteditable="false">
+                                            <p class="field switch">
+                                                <label class="cb-enable"><span>On</span></label>
+                                                <label class="cb-disable selected"><span>Off</span></label>
+                                            </p>
+                                        </td>
+                                        <td class="col-md-2 pt-3-half" contenteditable="false">
+                                        </td>
+{{--
+                                            @if ( isset($aryval) )
+                                                {{ $aryval }}
+                                            @endif
+
                                         <td class="col-md-3 pt-3-half" contenteditable="true">{{ $card_ary['company_name'] }}</td>
                                         <td class="col-md-2 pt-3-half" contenteditable="true">{{ $card_ary['countory'] }}</td>
                                         <td class="col-md-2 pt-3-half" contenteditable="true">{{ $card_ary['city'] }}</td>
-                                        <td class="col-md-1 pt-3-half">
+--}}
+                                        <td class="col-md-1 pt-3-half text-center">
                                             <span class="table-up">
                                                 <a href="#!" class="indigo-text">
                                                     <i class="material-icons" aria-hidden="true">arrow_upward</i>
@@ -110,6 +151,7 @@ echo "</pre>";
                                             </span>
                                         </td>
                                     </tr>
+                                    @endforeach
                                 @endforeach
                                 <!-- This is our clonable table line -->
 {{--

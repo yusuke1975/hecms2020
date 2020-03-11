@@ -102,4 +102,3 @@ $BTN.on('click', () => {
     $EXPORT.text(JSON.stringify(data));
 });
 })(jQuery);
-
