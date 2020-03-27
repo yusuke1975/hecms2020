@@ -149,6 +149,27 @@
                     </ul>
                 </li>
                 <h3 class="menu-title">sample</h3><!-- /.menu-title -->
+                <li class="menu-item-has-children dropdown">
+                    <a href="#" class="dropdown-toggle"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="menu-icon fa fa-cog"></i>Wysiwyg
+                    </a>
+                    <ul class="sub-menu children dropdown-menu">
+                        <li>
+                            <i class="fa fa-flask"></i>
+                            <a href="{{ route('sample_wysiwyg_jodit') }}"
+                               onclick="event.preventDefault();
+                                                     document.getElementById('form_sample_wysiwyg_jodit').submit();">
+                                <span>Jodit</span>
+                            </a>
+                            <form id="form_sample_wysiwyg_jodit" action="{{ route('sample_wysiwyg_jodit') }}"
+                                  method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+
                 <li>
                     <a href="/SufeeAdmin/index.html" target="SufeeAdmin"> <i class="menu-icon fa fa-chain"></i>sample SufeeAdmin </a>
                 </li>

@@ -1,3 +1,3 @@
 @section('breadcrumbs')
-    home >
+    [ {{$breadcrumb}} ]
 @endsection

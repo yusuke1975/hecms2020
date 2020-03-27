@@ -1,7 +1,6 @@
 @include('default_layouts.html-head')
 @include('default_layouts.header')
 @include('default_layouts.side-nav')
-@include('default_layouts.breadcrumbs')
 
 @section('_html-base')
 

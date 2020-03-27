@@ -11,6 +11,7 @@
         <div class="col-lg-3 col-md-6">
             <div class="social-box facebook">
                 <i class="sosial-box-header">database</i>
+{{--
                 @foreach($databases as $database)
                 <ul>
                     <li>
@@ -21,6 +22,14 @@
                     </li>
                 </ul>
                 @endforeach
+--}}
+                <ul>
+                    <li class="one-column">
+                        <select>
+                            <option>{{$databases[1][0]}} ({{$databases[1][1]}})</option>
+                        </select>
+                    </li>
+                </ul>
             </div>
             <!--/social-box-->
         </div>

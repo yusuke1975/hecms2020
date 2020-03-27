@@ -5,3 +5,11 @@
     color: #fff;
     background: #3b5998;
 }
+
+.social-box ul .one-column {
+    width: 100%;
+}
+
+.social-box ul .one-column select{
+    float: right;
+}

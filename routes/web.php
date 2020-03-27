@@ -23,3 +23,6 @@ Route::post('/settings/database', 'Pages\Settings\DatabaseController@index')->na
 Route::post('/settings/const', 'Pages\Settings\ConstController@index')->name('settings_const');
 Route::post('/settings/const2', 'Pages\Settings\Const2Controller@index')->name('settings_const2');
 Route::post('/settings/general', 'Pages\Settings\GeneralController@index')->name('settings_general');
+
+Route::post('/sample/wysiwyg/jodit', 'Pages\Sample\Wysiwyg\JoditController@index')->name('sample_wysiwyg_jodit');
+
